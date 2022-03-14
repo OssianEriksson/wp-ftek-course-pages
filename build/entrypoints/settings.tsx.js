@@ -1,0 +1,1 @@
+!function(){"use strict";var e=window.wp.element,t=()=>(0,e.createElement)("p",null,"Hello");document.addEventListener("DOMContentLoaded",(()=>{const n=document.getElementById("wp_ftek_course_pages_settings");n&&(0,e.render)((0,e.createElement)(t,null),n)}))}();

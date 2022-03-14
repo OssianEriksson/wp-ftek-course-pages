@@ -1,1 +1,1 @@
-<?php return array('dependencies' => array('wp-blocks', 'wp-element', 'wp-i18n'), 'version' => '87fc2a060b797c95aa06cbdf8f20505a');
+<?php return array('dependencies' => array('wp-blocks', 'wp-element', 'wp-i18n'), 'version' => 'e8db43222440a36ecbcaf072c6311fc0');

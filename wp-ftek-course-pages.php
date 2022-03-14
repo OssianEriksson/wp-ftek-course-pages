@@ -68,4 +68,14 @@ add_action(
 );
 
 
-$my_instance = new My_Class();
+$settings          = new Settings();
+$course_page_posts = new Course_Page_Posts();
+
+/**
+ * Removes persistant data
+ */
+function clean() {
+	Settings::clean();
+}
+
+register_uninstall_hook( __FILE__, 'clean' );
