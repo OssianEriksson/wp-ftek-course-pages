@@ -68,14 +68,29 @@ add_action(
 );
 
 
-$settings          = new Settings();
-$course_page_posts = new Course_Page_Posts();
+$settings = new Settings();
+$settings->add_hooks();
+
+$course_page_posts = new Course_Page_Posts( $settings );
+$course_page_posts->add_hooks();
+
+
+/**
+ * Plugin activation setup
+ */
+function activate() {
+	$settings          = new Settings();
+	$course_page_posts = new Course_Page_Posts( $settings );
+	$course_page_posts->update_rewrite_rules();
+}
+
+register_activation_hook( __FILE__, __NAMESPACE__ . '\activate' );
 
 /**
  * Removes persistant data
  */
-function clean() {
+function uninstall() {
 	Settings::clean();
 }
 
-register_uninstall_hook( __FILE__, 'clean' );
+register_uninstall_hook( __FILE__, __NAMESPACE__ . '\uninstall' );

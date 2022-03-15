@@ -12,13 +12,15 @@ namespace Ftek\WPFtekCoursePages;
  */
 class Settings {
 
-	const DEFAULT_SETTINGS = array();
+	const DEFAULT_SETTINGS = array(
+		'slug' => 'course',
+	);
 
 	/**
-	 * Default constructor
+	 * Adds hooks neccessary for settings to function
 	 */
-	public function __construct() {
-		add_action( 'init', array( $this, 'add_settings' ) );
+	public function add_hooks() {
+		add_action( 'rest_api_init', array( $this, 'rest_api_init' ) );
 		add_action( 'admin_menu', array( $this, 'add_settings_page' ) );
 		add_filter( 'plugin_action_links_wp-ftek-course-pages/wp-ftek-course-pages.php', array( $this, 'add_settings_action_link' ) );
 	}
@@ -29,31 +31,69 @@ class Settings {
 	 * @param ?string $key Key of requested setting or null for the entire
 	 *                     setting array.
 	 */
-	public function get( ?string $key ) {
+	public function get( ?string $key = null ) {
 		$option = get_option( 'wp_ftek_course_pages_option' );
 		$option = array_merge( self::DEFAULT_SETTINGS, $option ? $option : array() );
 		return null === $key ? $option : $option[ $key ];
 	}
 
 	/**
-	 * Adds plugin settings using the WordPress Settings API
+	 * Registers the REST API
 	 */
-	public function add_settings(): void {
-		register_setting(
-			'wp_ftek_course_pages_option_group',
-			'wp_ftek_course_pages_option',
+	public function rest_api_init(): void {
+		register_rest_route(
+			'wp-ftek-course-pages/v1',
+			'/settings',
 			array(
-				'single'       => true,
-				'show_in_rest' => array(
-					'schema' => array(
-						'type'       => 'object',
-						'required'   => true,
-						'properties' => array(),
-					),
-				),
-				'default'      => self::DEFAULT_SETTINGS,
+				'methods'             => 'GET',
+				'callback'            => function( \WP_REST_Request $request ): array {
+					return $this->get();
+				},
+				'permission_callback' => function(): bool {
+					return current_user_can( 'edit_others_pages' );
+				},
 			)
 		);
+
+		register_rest_route(
+			'wp-ftek-course-pages/v1',
+			'/settings',
+			array(
+				'methods'             => 'POST',
+				'callback'            => function( \WP_REST_Request $request ): array {
+					$this->update_settings(
+						array(
+							'slug' => $request['slug'],
+						)
+					);
+
+					return $this->get();
+				},
+				'args'                => array(
+					'slug' => array(
+						'type'     => 'string',
+						'required' => true,
+					),
+				),
+				'permission_callback' => function(): bool {
+					return current_user_can( 'edit_others_pages' );
+				},
+			)
+		);
+	}
+
+	/**
+	 * Sanitizes and updates settings
+	 *
+	 * @param array $settings New setting values.
+	 */
+	public function update_settings( array $settings ): void {
+		if ( $settings['slug'] !== $this->get( 'slug' ) ) {
+			$course_page_posts = new Course_Page_Posts( $this );
+			$course_page_posts->update_rewrite_rules();
+		}
+
+		update_option( 'wp_ftek_course_pages_option', $settings );
 	}
 
 	/**
@@ -64,7 +104,7 @@ class Settings {
 			'edit.php?post_type=course-page',
 			__( 'Course pages settings', 'wp-ftek-course-pages' ),
 			__( 'Settings', 'wp-ftek-course-pages' ),
-			'edit_others_posts',
+			'edit_others_pages',
 			'wp_ftek_course_pages_settings',
 			function(): void {
 				?>
