@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: WP Ftek Course Pages 0.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-ftek-course-"
 "pages\n"
-"POT-Creation-Date: 2022-03-14T20:11:36+00:00\n"
+"POT-Creation-Date: 2022-03-15T13:28:08+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,118 +36,139 @@ msgstr ""
 msgid "https://github.com/OssianEriksson"
 msgstr ""
 
-#: includes/class-course-page-posts.php:30
+#: includes/class-course-page-posts.php:86
 msgid "Course pages"
 msgstr "Kurssidor"
 
-#: includes/class-course-page-posts.php:31
+#: includes/class-course-page-posts.php:87
 msgid "Course page"
 msgstr "Kurssida"
 
-#: includes/class-course-page-posts.php:32
+#: includes/class-course-page-posts.php:88
+msgctxt "course page"
 msgid "Add new"
 msgstr "Skapa ny"
 
-#: includes/class-course-page-posts.php:33
+#: includes/class-course-page-posts.php:89
 msgid "Add New Course page"
 msgstr "Skapa ny kurssida"
 
-#: includes/class-course-page-posts.php:34
+#: includes/class-course-page-posts.php:90
 msgid "Edit Course page"
 msgstr "Redigera kurssida"
 
-#: includes/class-course-page-posts.php:35
+#: includes/class-course-page-posts.php:91
 msgid "New Course page"
 msgstr "Ny kurssida"
 
-#: includes/class-course-page-posts.php:36
+#: includes/class-course-page-posts.php:92
 msgid "View Course page"
 msgstr "Visa kurssida"
 
-#: includes/class-course-page-posts.php:37
+#: includes/class-course-page-posts.php:93
 msgid "View Course pages"
 msgstr "Visa kurssidor"
 
-#: includes/class-course-page-posts.php:38
+#: includes/class-course-page-posts.php:94
 msgid "Search Course pages"
 msgstr "Sök kurssidor"
 
-#: includes/class-course-page-posts.php:39
+#: includes/class-course-page-posts.php:95
 msgid "No Course pages found"
 msgstr "Inga kurssidor hittades"
 
-#: includes/class-course-page-posts.php:40
+#: includes/class-course-page-posts.php:96
 msgid "No Course pages found in Trash"
 msgstr "Inga kurssidor hittades i papperskorgen"
 
-#: includes/class-course-page-posts.php:41
+#: includes/class-course-page-posts.php:97
 msgid "All Course pages"
 msgstr "Alla kurssidor"
 
-#: includes/class-course-page-posts.php:42
+#: includes/class-course-page-posts.php:98
 msgid "Course page Attributes"
 msgstr "Kurssidoattribut"
 
-#: includes/class-course-page-posts.php:43
+#: includes/class-course-page-posts.php:99
 msgid "Insert into Course page"
 msgstr "Infoga i kurssida"
 
-#: includes/class-course-page-posts.php:44
+#: includes/class-course-page-posts.php:100
 msgid "Uploaded to this Course page"
 msgstr "Uppladdad till denna kurssida"
 
-#: includes/class-course-page-posts.php:45
+#: includes/class-course-page-posts.php:101
 msgid "Filter Course page list"
 msgstr "Filtrera kurssidolista"
 
-#: includes/class-course-page-posts.php:46
+#: includes/class-course-page-posts.php:102
 msgid "Course page list navigation"
 msgstr "Navigera kurssidolista"
 
-#: includes/class-course-page-posts.php:47
+#: includes/class-course-page-posts.php:103
 msgid "Course page list"
 msgstr "Kurssidolista"
 
-#: includes/class-course-page-posts.php:48
+#: includes/class-course-page-posts.php:104
 msgid "Course page published"
 msgstr "Kurssida publicerad"
 
-#: includes/class-course-page-posts.php:49
+#: includes/class-course-page-posts.php:105
 msgid "Course page reverted to draft"
 msgstr "Kurssida återställd från utkast"
 
-#: includes/class-course-page-posts.php:50
+#: includes/class-course-page-posts.php:106
 msgid "Course page scheduled"
 msgstr "Kurssida schemalagd"
 
-#: includes/class-course-page-posts.php:51
+#: includes/class-course-page-posts.php:107
 msgid "Course page updated"
 msgstr "Kurssida uppdaterad"
 
-#: includes/class-course-page-posts.php:52
+#: includes/class-course-page-posts.php:108
 msgid "Course page link"
 msgstr "Länk till kurssida"
 
-#: includes/class-course-page-posts.php:53
-#, fuzzy
+#: includes/class-course-page-posts.php:109
 msgid "A link to a Course page"
 msgstr "En länk till en kurssida"
 
-#: includes/class-course-page-posts.php:55
+#: includes/class-course-page-posts.php:111
 msgid "Information about a course"
 msgstr "Information om en kurs"
 
-#: includes/class-settings.php:65
+#: includes/class-settings.php:105
 msgid "Course pages settings"
 msgstr "Kurssidoinställningar"
 
-#: includes/class-settings.php:66 includes/class-settings.php:110
+#: includes/class-settings.php:106 includes/class-settings.php:150
 msgid "Settings"
 msgstr "Inställningar"
 
 #: build/blocks/my-block/editor.js:1
 msgid "Hello from MyComponent!"
 msgstr ""
+
+#: build/entrypoints/settings.tsx.js:1
+msgid "The following error has occurred:"
+msgstr "Följande fel har inträffat:"
+
+#: build/entrypoints/settings.tsx.js:1
+#, fuzzy
+msgid "Course page slug"
+msgstr "Kurssidornas slug"
+
+#: build/entrypoints/settings.tsx.js:1
+msgid "Settings saved."
+msgstr "Inställningarna sparade."
+
+#: build/entrypoints/settings.tsx.js:1
+msgid "Save changes"
+msgstr "Spara ändringar"
+
+#: build/entrypoints/settings.tsx.js:1
+msgid "Course Pages Settings"
+msgstr "Kurssidoinställningar"
 
 #: build/blocks/my-block/block.json src/blocks/my-block/block.json
 msgctxt "block title"
