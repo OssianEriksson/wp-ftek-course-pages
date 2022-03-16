@@ -99,17 +99,6 @@ class Course_Page_Posts {
 			'before'
 		);
 
-		$children_template = array();
-		if ( \WP_Block_Type_Registry::get_instance()->is_registered( 'wp-drive-list/drive-list' ) ) {
-			$children_template[] = array(
-				'wp-drive-list/drive-list',
-				array(
-					'depth'    => 2,
-					'download' => true,
-				),
-			);
-		}
-
 		register_post_type(
 			'course-page',
 			array(
@@ -157,11 +146,7 @@ class Course_Page_Posts {
 					'with_front' => false,
 				),
 				'template'            => array(
-					array(
-						'wp-ftek-course-pages/course-info',
-						array(),
-						$children_template,
-					),
+					array( 'wp-ftek-course-pages/course-info' ),
 				),
 			)
 		);

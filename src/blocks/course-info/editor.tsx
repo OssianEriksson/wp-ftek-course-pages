@@ -1,5 +1,9 @@
 import { registerBlockType } from '@wordpress/blocks';
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import {
+	useBlockProps,
+	InspectorControls,
+	InnerBlocks,
+} from '@wordpress/block-editor';
 import { useEntityProp } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import {
@@ -23,7 +27,6 @@ const programs = ['F', 'TM'] as const;
 const studyPerionds = [1, 2, 3, 4] as const;
 const years = ['1', '2', '3', 'master'] as const;
 
-type StudyPeriod = typeof studyPerionds[number];
 type StudentRepresentative = { name: string; cid: string };
 type PostMeta = {
 	code: string;
@@ -49,8 +52,14 @@ const coursePageIcon = (
 	</svg>
 );
 
-function RenderedCoursePage({ meta }: { meta: PostMeta }): JSX.Element {
-	const linkItems = [
+function RenderedCoursePage({
+	meta,
+	children,
+}: {
+	meta: PostMeta;
+	children: React.ReactNode;
+}): JSX.Element {
+	const linkItems: { text: string; url: string }[] = [
 		{
 			text: __('Course homepage', 'wp-ftek-course-pages'),
 			url: meta.homepage_url,
@@ -63,6 +72,14 @@ function RenderedCoursePage({ meta }: { meta: PostMeta }): JSX.Element {
 			text: __('Latest survey', 'wp-ftek-course-pages'),
 			url: meta.survey_url,
 		},
+		...(meta.code
+			? [
+					{
+						text: __('Exam statistics', 'wp-ftek-course-pages'),
+						url: `https://stats.ftek.se/${meta.code}`,
+					},
+			  ]
+			: []),
 	].filter((link) => link.url);
 
 	const studentRepresentativeItems = meta.student_representatives.filter(
@@ -123,16 +140,7 @@ function RenderedCoursePage({ meta }: { meta: PostMeta }): JSX.Element {
 					: _x('SP', 'study period', 'wp-ftek-course-pages')
 			}`}</h2>
 			<div className="course-layout">
-				<div className="course-content">
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-					sed do eiusmod tempor incididunt ut labore et dolore magna
-					aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-					ullamco laboris nisi ut aliquip ex ea commodo consequat.
-					Duis aute irure dolor in reprehenderit in voluptate velit
-					esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-					occaecat cupidatat non proident, sunt in culpa qui officia
-					deserunt mollit anim id est laborum.
-				</div>
+				<div className="course-content">{children}</div>
 				<div className="course-sidebar">
 					{linkItems.length > 0 && (
 						<>
@@ -214,11 +222,54 @@ function EditableCoursePage({
 	const [participantCountText, setParticipantCountText] =
 		useState<string>(null);
 
+	type Block = [string, { [key: string]: unknown }];
+	const driveList = useSelect(
+		(select) =>
+			select('core/blocks').getBlockType('wp-drive-list/drive-list'),
+		[]
+	);
+	let innerBlocksTemplate: Block[] = [
+		[
+			'core/heading',
+			{ content: __('Description', 'wp-ftek-course-pages'), level: 3 },
+		],
+		[
+			'core/paragraph',
+			{
+				placeholder: __(
+					'Description goes here.',
+					'wp-ftek-course-pages'
+				),
+			},
+		],
+		...(driveList
+			? ([
+					[
+						'core/heading',
+						{
+							content: _x(
+								'Documents',
+								'drive list heading',
+								'wp-ftek-course-pages'
+							),
+							level: 3,
+						},
+					],
+					[
+						'wp-drive-list/drive-list',
+						{
+							depth: 2,
+							download: true,
+						},
+					],
+			  ] as Block[])
+			: []),
+	];
+
 	const postType = useSelect(
 		(select) => select('core/editor').getCurrentPostType(),
 		[]
 	);
-
 	const [postMeta, setPostMeta] = useEntityProp('postType', postType, 'meta');
 
 	const [meta, setMeta]: [PostMeta, (m: PostMeta) => void] =
@@ -518,7 +569,9 @@ function EditableCoursePage({
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
-			<RenderedCoursePage meta={meta} />
+			<RenderedCoursePage meta={meta}>
+				<InnerBlocks template={innerBlocksTemplate} />
+			</RenderedCoursePage>
 		</>
 	);
 }
@@ -538,11 +591,11 @@ function Edit({ attributes, setAttributes }): JSX.Element {
 function Save({ attributes }): JSX.Element {
 	return (
 		<div {...useBlockProps.save()}>
-			<RenderedCoursePage meta={attributes} />
+			<RenderedCoursePage meta={attributes}>
+				<InnerBlocks.Content />
+			</RenderedCoursePage>
 		</div>
 	);
 }
 
 registerBlockType(metadata, { edit: Edit, save: Save, icon: coursePageIcon });
-
-console.debug(__('Course Code', 'wp-ftek-course-pages'));

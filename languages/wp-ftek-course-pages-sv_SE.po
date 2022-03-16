@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: WP Ftek Course Pages 0.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-ftek-course-"
 "pages\n"
-"POT-Creation-Date: 2022-03-16T16:38:21+00:00\n"
+"POT-Creation-Date: 2022-03-16T18:34:52+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Ossian Eriksson <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,104 +36,104 @@ msgstr ""
 msgid "https://github.com/OssianEriksson"
 msgstr ""
 
-#: includes/class-course-page-posts.php:117
+#: includes/class-course-page-posts.php:106
 msgid "Course pages"
 msgstr "Kurssidor"
 
-#: includes/class-course-page-posts.php:118
+#: includes/class-course-page-posts.php:107
 msgid "Course page"
 msgstr "Kurssida"
 
-#: includes/class-course-page-posts.php:119
+#: includes/class-course-page-posts.php:108
 msgctxt "course page"
 msgid "Add new"
 msgstr "Skapa ny"
 
-#: includes/class-course-page-posts.php:120
+#: includes/class-course-page-posts.php:109
 msgid "Add New Course page"
 msgstr "Skapa ny kurssida"
 
-#: includes/class-course-page-posts.php:121
+#: includes/class-course-page-posts.php:110
 msgid "Edit Course page"
 msgstr "Redigera kurssida"
 
-#: includes/class-course-page-posts.php:122
+#: includes/class-course-page-posts.php:111
 msgid "New Course page"
 msgstr "Ny kurssida"
 
-#: includes/class-course-page-posts.php:123
+#: includes/class-course-page-posts.php:112
 msgid "View Course page"
 msgstr "Visa kurssida"
 
-#: includes/class-course-page-posts.php:124
+#: includes/class-course-page-posts.php:113
 msgid "View Course pages"
 msgstr "Visa kurssidor"
 
-#: includes/class-course-page-posts.php:125
+#: includes/class-course-page-posts.php:114
 msgid "Search Course pages"
 msgstr "Sök kurssidor"
 
-#: includes/class-course-page-posts.php:126
+#: includes/class-course-page-posts.php:115
 msgid "No Course pages found"
 msgstr "Inga kurssidor hittades"
 
-#: includes/class-course-page-posts.php:127
+#: includes/class-course-page-posts.php:116
 msgid "No Course pages found in Trash"
 msgstr "Inga kurssidor hittades i papperskorgen"
 
-#: includes/class-course-page-posts.php:128
+#: includes/class-course-page-posts.php:117
 msgid "All Course pages"
 msgstr "Alla kurssidor"
 
-#: includes/class-course-page-posts.php:129
+#: includes/class-course-page-posts.php:118
 msgid "Course page Attributes"
 msgstr "Kurssidoattribut"
 
-#: includes/class-course-page-posts.php:130
+#: includes/class-course-page-posts.php:119
 msgid "Insert into Course page"
 msgstr "Infoga i kurssida"
 
-#: includes/class-course-page-posts.php:131
+#: includes/class-course-page-posts.php:120
 msgid "Uploaded to this Course page"
 msgstr "Uppladdad till denna kurssida"
 
-#: includes/class-course-page-posts.php:132
+#: includes/class-course-page-posts.php:121
 msgid "Filter Course page list"
 msgstr "Filtrera kurssidolista"
 
-#: includes/class-course-page-posts.php:133
+#: includes/class-course-page-posts.php:122
 msgid "Course page list navigation"
 msgstr "Navigera kurssidolista"
 
-#: includes/class-course-page-posts.php:134
+#: includes/class-course-page-posts.php:123
 msgid "Course page list"
 msgstr "Kurssidolista"
 
-#: includes/class-course-page-posts.php:135
+#: includes/class-course-page-posts.php:124
 msgid "Course page published"
 msgstr "Kurssida publicerad"
 
-#: includes/class-course-page-posts.php:136
+#: includes/class-course-page-posts.php:125
 msgid "Course page reverted to draft"
 msgstr "Kurssida återställd från utkast"
 
-#: includes/class-course-page-posts.php:137
+#: includes/class-course-page-posts.php:126
 msgid "Course page scheduled"
 msgstr "Kurssida schemalagd"
 
-#: includes/class-course-page-posts.php:138
+#: includes/class-course-page-posts.php:127
 msgid "Course page updated"
 msgstr "Kurssida uppdaterad"
 
-#: includes/class-course-page-posts.php:139
+#: includes/class-course-page-posts.php:128
 msgid "Course page link"
 msgstr "Länk till kurssida"
 
-#: includes/class-course-page-posts.php:140
+#: includes/class-course-page-posts.php:129
 msgid "A link to a Course page"
 msgstr "En länk till en kurssida"
 
-#: includes/class-course-page-posts.php:142
+#: includes/class-course-page-posts.php:131
 msgid "Information about a course"
 msgstr "Information om en kurs"
 
@@ -156,6 +156,10 @@ msgstr "Allmän information"
 #: build/blocks/course-info/editor.js:1
 msgid "Latest survey"
 msgstr "Senaste kursnämndsprotokoll"
+
+#: build/blocks/course-info/editor.js:1
+msgid "Exam statistics"
+msgstr "Tentastatistik"
 
 #: build/blocks/course-info/editor.js:1
 msgid "Course Code"
@@ -199,6 +203,19 @@ msgstr "Saknas något?"
 #: build/blocks/course-info/editor.js:1
 msgid "Contact <a %$1s>SNF</a>."
 msgstr "Kontakta <a %$1s>SNF</a>."
+
+#: build/blocks/course-info/editor.js:1
+msgid "Description"
+msgstr "Beskrivning"
+
+#: build/blocks/course-info/editor.js:1
+msgid "Description goes here."
+msgstr "Skriv beskrivning här."
+
+#: build/blocks/course-info/editor.js:1
+msgctxt "drive list heading"
+msgid "Documents"
+msgstr "Veckobladeriet"
 
 #: build/blocks/course-info/editor.js:1
 msgid "Course Page"
