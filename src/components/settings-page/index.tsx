@@ -100,11 +100,11 @@ const SettingsContent = (): JSX.Element => {
 };
 
 const SettingsPage = (): JSX.Element => (
-	<>
+	<div className="wp-ftek-course-pages-settings">
 		<h1>{__('Course Pages Settings', 'wp-ftek-course-pages')}</h1>
 		<SettingsContent />
 		<NoticeBar />
-	</>
+	</div>
 );
 
 export default SettingsPage;

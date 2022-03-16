@@ -1,7 +1,0 @@
-{
-	"apiVersion": 2,
-	"name": "wp-ftek-course-pages/my-block",
-	"title": "My Block",
-	"textdomain": "wp-ftek-course-pages",
-	"editorScript": "file:./editor.js"
-}

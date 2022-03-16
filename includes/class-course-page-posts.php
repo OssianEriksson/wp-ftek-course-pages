@@ -12,6 +12,19 @@ namespace Ftek\WPFtekCoursePages;
  */
 class Course_Page_Posts {
 
+	const DEFAULT_META = array(
+		'code'                    => '',
+		'credits'                 => 0,
+		'homepage_url'            => '',
+		'info_url'                => '',
+		'survey_url'              => '',
+		'student_representatives' => array(),
+		'study_perionds'          => array(),
+		'year'                    => '',
+		'programmes'              => array(),
+		'participant_count'       => 0,
+	);
+
 	/**
 	 * Local settings reference
 	 *
@@ -33,32 +46,35 @@ class Course_Page_Posts {
 	 */
 	public function add_hooks() {
 		add_action( 'init', array( $this, 'register_post_type' ) );
-		add_action( 'save_post_course-page', array( $this, 'update_post_slug' ), 10, 3 );
+		add_action( 'update_post_metadata', array( $this, 'update_post_slug' ), 10, 4 );
 	}
 
 	/**
-	 * Updates the slug of the provided post
+	 * Updates post slug to match course code
 	 *
-	 * @param int      $post_ID Post ID.
-	 * @param \WP_Post $post    Post object.
+	 * Callback for the `update_{$meta_type}_metadata` filter hook
+	 *
+	 * @param ?bool  $check      Whether to allow updating metadata for the given type.
+	 * @param int    $object_id  ID of the page metadata is for.
+	 * @param string $meta_key   Metadata key.
+	 * @param mixed  $meta_value Metadata value.
 	 */
-	public function update_post_slug( int $post_ID, \WP_Post $post ): void {
-		remove_action( 'save_post_course-page', array( $this, 'update_post_slug' ) );
-
-		wp_update_post(
-			array(
-				'ID'        => $post_ID,
-				'post_name' => 'tma123',
-			)
-		);
-
-		add_action( 'save_post_course-page', array( $this, 'update_post_slug' ), 10, 3 );
+	public function update_post_slug( ?bool $check, int $object_id, string $meta_key, $meta_value ): ?bool {
+		if ( 'wp_ftek_course_pages_meta' === $meta_key && $meta_value['code'] ?? false ) {
+			wp_update_post(
+				array(
+					'ID'        => $object_id,
+					'post_name' => $meta_value['code'],
+				)
+			);
+		}
+		return $check;
 	}
 
 	/**
 	 * Updates the rewrite rules used to assign nicer urls to posts
 	 */
-	public function update_rewrite_rules() {
+	public function update_rewrite_rules(): void {
 		$this->register_post_type();
 		flush_rewrite_rules();
 	}
@@ -67,16 +83,31 @@ class Course_Page_Posts {
 	 * Registers the custom post type
 	 */
 	public function register_post_type(): void {
+		register_block_type( PLUGIN_ROOT . '/build/blocks/course-info' );
+		wp_set_script_translations(
+			'wp-ftek-course-pages-course-info-editor-script',
+			'wp-ftek-course-pages',
+			PLUGIN_ROOT . '/languages'
+		);
+		wp_add_inline_script(
+			'wp-ftek-course-pages-course-info-editor-script',
+			'const wpFtekCoursePages = ' . wp_json_encode(
+				array(
+					'iconUrl' => plugins_url( '/assets/menu-icon.svg', PLUGIN_FILE ),
+				)
+			),
+			'before'
+		);
+
+		$children_template = array();
 		if ( \WP_Block_Type_Registry::get_instance()->is_registered( 'wp-drive-list/drive-list' ) ) {
-			$template = array(
+			$children_template[] = array(
 				'wp-drive-list/drive-list',
 				array(
 					'depth'    => 2,
 					'download' => true,
 				),
 			);
-		} else {
-			$template = null;
 		}
 
 		register_post_type(
@@ -120,12 +151,81 @@ class Course_Page_Posts {
 				'menu_icon'           => 'data:image/svg+xml;base64,' . base64_encode( file_get_contents( PLUGIN_ROOT . '/assets/menu-icon.svg' ) ),
 				'capability_type'     => 'page',
 				'delete_with_user'    => false,
-				'supports'            => array( 'editor', 'title', 'thumbnail' ),
+				'supports'            => array( 'editor', 'custom-fields', 'title' ),
 				'rewrite'             => array(
 					'slug'       => $this->settings->get( 'slug' ),
 					'with_front' => false,
 				),
-				'template'            => $template,
+				'template'            => array(
+					array(
+						'wp-ftek-course-pages/course-info',
+						array(),
+						$children_template,
+					),
+				),
+			)
+		);
+
+		register_post_meta(
+			'course-page',
+			'wp_ftek_course_pages_meta',
+			array(
+				'type'         => 'object',
+				'single'       => true,
+				'default'      => self::DEFAULT_META,
+				'show_in_rest' => array(
+					'schema' => array(
+						'type'       => 'object',
+						'properties' => array(
+							'code'                    => array( 'type' => 'string' ),
+							'credits'                 => array(
+								'type'    => 'number',
+								'minimum' => 0,
+							),
+							'homepage_url'            => array( 'type' => 'string' ),
+							'info_url'                => array( 'type' => 'string' ),
+							'survey_url'              => array( 'type' => 'string' ),
+							'student_representatives' => array(
+								'type'  => 'array',
+								'items' => array(
+									'type'       => 'object',
+									'properties' => array(
+										'name' => array(
+											'type'     => 'string',
+											'required' => true,
+										),
+										'cid'  => array(
+											'type'     => 'string',
+											'required' => true,
+										),
+									),
+								),
+							),
+							'study_perionds'          => array(
+								'type'  => 'array',
+								'items' => array(
+									'type' => 'number',
+									'enum' => array( 1, 2, 3, 4 ),
+								),
+							),
+							'year'                    => array(
+								'type' => 'string',
+								'enum' => array( '', '1', '2', '3', 'master' ),
+							),
+							'programmes'              => array(
+								'type'  => 'array',
+								'items' => array(
+									'type' => 'string',
+									'enum' => array( 'F', 'TM' ),
+								),
+							),
+							'participant_count'       => array(
+								'type'    => 'number',
+								'minimum' => 0,
+							),
+						),
+					),
+				),
 			)
 		);
 	}
