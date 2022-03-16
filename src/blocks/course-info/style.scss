@@ -43,5 +43,33 @@ $desktop-breakpoint: 783px;
 				height: 100%;
 			}
 		}
+
+		ul {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+	}
+}
+
+.wp-block-wp-ftek-course-pages-course-info-inspector {
+	width: 100%;
+
+	&.list-selector {
+		width: 100%;
+
+		.list-selector-item {
+			display: flex;
+			align-items: center;
+			margin-bottom: 1rem;
+
+			.stacked-inputs {
+				padding: 0.5rem;
+			}
+		}
+	}
+
+	.panel-label {
+		margin-bottom: 1rem;
 	}
 }

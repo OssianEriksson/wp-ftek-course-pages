@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: WP Ftek Course Pages 0.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-ftek-course-"
 "pages\n"
-"POT-Creation-Date: 2022-03-16T13:33:36+00:00\n"
+"POT-Creation-Date: 2022-03-16T16:38:21+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Ossian Eriksson <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -171,7 +171,7 @@ msgid "Master's course"
 msgstr "Masterskurs"
 
 #: build/blocks/course-info/editor.js:1
-msgid "Programme"
+msgid "Program"
 msgstr "Program"
 
 #: build/blocks/course-info/editor.js:1
@@ -207,6 +207,66 @@ msgstr "Kurssida"
 #: build/blocks/course-info/editor.js:1
 msgid "Course code"
 msgstr "Kurskod"
+
+#: build/blocks/course-info/editor.js:1
+msgid "Credits"
+msgstr "Högskolepoäng"
+
+#: build/blocks/course-info/editor.js:1
+msgid "Course homepage URL"
+msgstr "URL för kurshemsidan"
+
+#: build/blocks/course-info/editor.js:1
+msgid "Course info URL"
+msgstr "URL för kursinformation"
+
+#: build/blocks/course-info/editor.js:1
+msgid "Latest course survey URL"
+msgstr "URL för senaste kursnämndsprotokoll"
+
+#: build/blocks/course-info/editor.js:1
+msgid "Student representatives"
+msgstr "Kursutvärderare"
+
+#: build/blocks/course-info/editor.js:1
+msgid "Full Name"
+msgstr "Namn"
+
+#: build/blocks/course-info/editor.js:1
+msgctxt "Chalmers ID"
+msgid "CID"
+msgstr ""
+
+#: build/blocks/course-info/editor.js:1
+msgctxt "student representative"
+msgid "Add"
+msgstr "Ny"
+
+#: build/blocks/course-info/editor.js:1
+msgid "Study perionds"
+msgstr "Läsperioder"
+
+#: build/blocks/course-info/editor.js:1
+msgctxt "grade"
+msgid "Year"
+msgstr "Årskurs"
+
+#: build/blocks/course-info/editor.js:1
+msgctxt "grade"
+msgid "Year %$1s"
+msgstr "Årskurs %$1s"
+
+#: build/blocks/course-info/editor.js:1
+msgid "Progammes"
+msgstr "Program"
+
+#: build/blocks/course-info/editor.js:1
+msgid "Approximate number of participants"
+msgstr "Ungefärligt antal deltagare"
+
+#: build/blocks/course-info/editor.js:1
+msgid "Used for sorting courses"
+msgstr "Används för att sortera kurser"
 
 #: build/entrypoints/settings.tsx.js:1
 msgid "The following error has occurred:"

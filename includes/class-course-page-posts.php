@@ -21,7 +21,7 @@ class Course_Page_Posts {
 		'student_representatives' => array(),
 		'study_perionds'          => array(),
 		'year'                    => '',
-		'programmes'              => array(),
+		'programs'                => array(),
 		'participant_count'       => 0,
 	);
 
@@ -212,7 +212,7 @@ class Course_Page_Posts {
 								'type' => 'string',
 								'enum' => array( '', '1', '2', '3', 'master' ),
 							),
-							'programmes'              => array(
+							'programs'                => array(
 								'type'  => 'array',
 								'items' => array(
 									'type' => 'string',

@@ -37,7 +37,7 @@
 			"enum": ["", "1", "2", "3", "master"],
 			"default": ""
 		},
-		"programmes": {
+		"programs": {
 			"type": "array",
 			"default": []
 		},
@@ -46,6 +46,6 @@
 			"default": 0
 		}
 	},
-	"style": "file:./style-editor.css",
-	"editorScript": "file:./editor.js"
+	"style": "file:style-editor.css",
+	"editorScript": "file:editor.js"
 }
