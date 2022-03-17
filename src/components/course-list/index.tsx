@@ -3,12 +3,9 @@ import {
 	Button,
 	SelectControl,
 	DropdownMenu,
-	MenuGroup,
-	MenuItem,
 } from '@wordpress/components';
 import { useState, useEffect } from '@wordpress/element';
 import { __, _x } from '@wordpress/i18n';
-import apiFetch from '@wordpress/api-fetch';
 
 import {
 	formatCode,
@@ -24,6 +21,7 @@ import {
 	studyPerionds,
 	programs,
 	Year,
+	CoursePage,
 } from '../../types';
 import CourseLinks from '../../components/course-links';
 import { removePrefix } from '../../utils/meta-map-keys';
@@ -31,6 +29,7 @@ import MenuGroupCheckboxes from '../menu-group-checkboxes';
 
 import './index.scss';
 import hasIntersection from '../../utils/includesAny';
+import useFetchAll from '../../hooks/useFetchAll';
 
 function CourseList(): JSX.Element {
 	const [pageIndex, setPageIndex] = useState(0);
@@ -39,28 +38,7 @@ function CourseList(): JSX.Element {
 	const [whitelistYears, setWhitelistYears] = useState([...years]);
 	const [whitelistPrograms, setWhitelistPrograms] = useState([...programs]);
 	const [whitelistSPs, setWhitelistSPs] = useState([...studyPerionds]);
-	const [{ posts, postsPage }, setPosts] = useState({
-		posts: [],
-		postsPage: 1,
-	});
-
-	useEffect(() => {
-		const pageSize = 100;
-		if (posts.length === pageSize * (postsPage - 1)) {
-			apiFetch({
-				path: `/wp/v2/course-page?page=${postsPage}&per_page=${pageSize}`,
-			})
-				.then((morePosts) => {
-					if (Array.isArray(morePosts) && morePosts.length > 0) {
-						setPosts({
-							posts: [...posts, ...morePosts],
-							postsPage: postsPage + 1,
-						});
-					}
-				})
-				.catch(() => {});
-		}
-	}, [posts]);
+	const posts = useFetchAll<CoursePage>({ path: '/wp/v2/course-page' });
 
 	const filteredPosts = posts
 		.filter((post) => {
@@ -86,7 +64,7 @@ function CourseList(): JSX.Element {
 			);
 		})
 		.sort(
-			(a: { meta: PostMeta }, b: { meta: PostMeta }) =>
+			(a, b) =>
 				b.meta.wp_ftek_course_pages_participant_count -
 				a.meta.wp_ftek_course_pages_participant_count
 		);

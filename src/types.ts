@@ -30,3 +30,11 @@ export type RemovePrefix<T> = {
 };
 
 export type PostMeta = AddPrefix<PostMetaShort>;
+
+export type CoursePage = {
+	meta: PostMeta;
+	link: string;
+	title: {
+		rendered: string;
+	};
+};
