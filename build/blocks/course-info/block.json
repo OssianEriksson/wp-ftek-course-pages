@@ -44,6 +44,14 @@
 		"participant_count": {
 			"type": "number",
 			"default": 0
+		},
+		"elective": {
+			"type": "boolean",
+			"default": false
+		},
+		"comment": {
+			"type": "string",
+			"default": ""
 		}
 	},
 	"style": "file:style-editor.css",

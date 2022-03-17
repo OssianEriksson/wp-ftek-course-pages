@@ -463,6 +463,37 @@ function EditableCoursePage({
 							}}
 						/>
 					</PanelRow>
+					<PanelRow>
+						<CheckboxControl
+							label={__(
+								'Elective course',
+								'wp-ftek-course-pages'
+							)}
+							checked={meta.elective}
+							onChange={(checked) => {
+								setMeta({
+									...meta,
+									elective: checked,
+								});
+							}}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<TextControl
+							label={__('Comment', 'wp-ftek-course-pages')}
+							help={__(
+								'Shown as footnote in course table',
+								'wp-ftek-course-pages'
+							)}
+							value={meta.comment}
+							onChange={(value) => {
+								setMeta({
+									...meta,
+									comment: value,
+								});
+							}}
+						/>
+					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 			<RenderedCoursePage meta={meta}>

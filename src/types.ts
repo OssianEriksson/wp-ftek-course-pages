@@ -18,6 +18,8 @@ export type PostMetaShort = {
 	year: '' | Year;
 	programs: Program[];
 	participant_count: number;
+	elective: boolean;
+	comment: string;
 };
 
 export type AddPrefix<T> = {

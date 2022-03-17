@@ -25,11 +25,13 @@ declare const wpFtekCoursePagesCourseTableEditor: { iconUrl: string };
 type PostView = {
 	title: string;
 	link: string;
+	comments: string[];
 };
 
 function YearTable({
 	posts,
 	year,
+	footnotes,
 }: {
 	posts: {
 		[P in Program | 'multiple']: {
@@ -37,6 +39,7 @@ function YearTable({
 		};
 	};
 	year: Year;
+	footnotes: { [k: string]: number };
 }): JSX.Element {
 	const allPrograms = ['multiple', ...programs] as (Program | 'multiple')[];
 	const maxCourses = Object.fromEntries(
@@ -82,18 +85,30 @@ function YearTable({
 										: formatProgramYear(year, [program])}
 								</th>
 							)}
-							{studyPerionds.flatMap((sp, k) => {
+							{studyPerionds.flatMap((sp, l) => {
 								if (j > p[sp].length) {
 									return [];
 								}
 								if (j === p[sp].length) {
-									return [<td key={k} rowSpan={rows - j} />];
+									return [<td key={l} rowSpan={rows - j} />];
 								}
+								const post = p[sp][j];
 								return [
-									<td key={k}>
-										<a href={p[sp][j].link}>
-											{p[sp][j].title}
-										</a>
+									<td key={l}>
+										<a href={post.link}>{post.title}</a>
+										{post.comments.map((comment, k) => {
+											const idx = footnotes[comment];
+											return (
+												<sup key={k}>
+													{k > 0 && ','}
+													<a
+														href={`#table-footnote-${idx}`}
+													>
+														{idx}
+													</a>
+												</sup>
+											);
+										})}
 									</td>,
 								];
 							})}
@@ -130,25 +145,45 @@ function CourseTable(): JSX.Element {
 		};
 	};
 
+	let footnotesIndex = 1;
+	const electiveCourseComment = __('Elective course', 'wp-ftek-course-pages');
+	const footnotes: { [k: string]: number } = {};
+
 	allPosts.forEach((post) => {
 		const {
 			wp_ftek_course_pages_programs: prog,
 			wp_ftek_course_pages_year: year,
 			wp_ftek_course_pages_study_perionds: sps,
+			wp_ftek_course_pages_comment: comment,
+			wp_ftek_course_pages_elective: elective,
 		} = post.meta;
 
 		if (prog.length <= 0 || !year) {
 			return;
 		}
 
+		const comments = [
+			...(elective ? [electiveCourseComment] : []),
+			...(comment ? [comment] : []),
+		];
+		comments.forEach((c) => {
+			if (!(c in footnotes)) {
+				footnotes[c] = footnotesIndex++;
+			}
+		});
+
 		const program = prog.length > 1 ? 'multiple' : prog[0];
+
 		sps.forEach((sp) => {
-			posts[year][program][sp].push({
+			posts[year as Exclude<Year, 'master'>][program][sp].push({
 				title: post.title.rendered,
 				link: post.link,
+				comments,
 			});
 		});
 	});
+
+	const footnotesEntries = Object.entries(footnotes);
 
 	return (
 		<div className="table-wrapper">
@@ -166,9 +201,27 @@ function CourseTable(): JSX.Element {
 							'wp-ftek-course-pages'
 						).replace('%$1s', year)}
 					</h3>
-					<YearTable key={i} year={year} posts={posts[year]} />
+					<YearTable
+						key={i}
+						year={year}
+						posts={posts[year]}
+						footnotes={footnotes}
+					/>
 				</Fragment>
 			))}
+			{footnotesEntries.length > 0 && (
+				<p>
+					{footnotesEntries.map(([text, idx], i) => (
+						<>
+							{i > 0 && <br />}
+							<span key={i} id={`table-footnote-${idx}`}>
+								<sup>{idx}</sup>
+								{text}
+							</span>
+						</>
+					))}
+				</p>
+			)}
 		</div>
 	);
 }

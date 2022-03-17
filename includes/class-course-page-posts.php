@@ -89,6 +89,14 @@ class Course_Page_Posts {
 				'minimum' => 0,
 			),
 		),
+		'elective'                => array(
+			'default' => false,
+			'schema'  => array( 'type' => 'boolean' ),
+		),
+		'comment'                 => array(
+			'default' => '',
+			'schema'  => array( 'type' => 'string' ),
+		),
 	);
 
 	/**
