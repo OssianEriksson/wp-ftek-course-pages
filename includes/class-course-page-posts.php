@@ -159,7 +159,7 @@ class Course_Page_Posts {
 			'wp-ftek-course-pages-course-info-editor-script',
 			'const wpFtekCoursePages = ' . wp_json_encode(
 				array(
-					'iconUrl' => plugins_url( '/assets/menu-icon.svg', PLUGIN_FILE ),
+					'iconUrl' => plugins_url( '/assets/open-book.svg', PLUGIN_FILE ),
 				)
 			),
 			'before'
@@ -203,7 +203,7 @@ class Course_Page_Posts {
 				'show_in_rest'        => true,
 				'menu_position'       => 20,
 				// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents, WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
-				'menu_icon'           => 'data:image/svg+xml;base64,' . base64_encode( file_get_contents( PLUGIN_ROOT . '/assets/menu-icon.svg' ) ),
+				'menu_icon'           => 'data:image/svg+xml;base64,' . base64_encode( file_get_contents( PLUGIN_ROOT . '/assets/open-book.svg' ) ),
 				'capability_type'     => 'page',
 				'delete_with_user'    => false,
 				'supports'            => array( 'editor', 'custom-fields', 'title' ),
