@@ -40,13 +40,15 @@ function CourseList(): JSX.Element {
 	const [whitelistSPs, setWhitelistSPs] = useState([...studyPerionds]);
 	const posts = useFetchAll<CoursePage>({ path: '/wp/v2/course-page' });
 
+	const lowerCaseSearch = search.toLocaleLowerCase();
 	const filteredPosts = posts
 		.filter((post) => {
 			const meta: PostMeta = post.meta;
 			return (
-				post.title.rendered
-					.toLowerCase()
-					.includes(search.toLocaleLowerCase()) &&
+				(post.title.rendered.toLowerCase().includes(lowerCaseSearch) ||
+					post.meta.wp_ftek_course_pages_code
+						.toLocaleLowerCase()
+						.includes(lowerCaseSearch)) &&
 				(whitelistYears.length === years.length ||
 					(whitelistYears as ('' | Year)[]).includes(
 						meta.wp_ftek_course_pages_year
@@ -121,104 +123,140 @@ function CourseList(): JSX.Element {
 					/>
 				</div>
 			</div>
-			<table>
-				<thead>
-					<tr>
-						<th>{__('Course page', 'wp-ftek-course-pages')}</th>
-						<th>{__('Course code', 'wp-ftek-course-pages')}</th>
-						<th>{__('Credits', 'wp-ftek-course-pages')}</th>
-						<th>
-							<div>
-								{_x('Year', 'grade', 'wp-ftek-course-pages')}
-								<DropdownMenu icon="filter">
-									{() => (
-										<>
-											<MenuGroupCheckboxes
-												options={years.map((year) => ({
-													label: formatYear(year),
-													value: year,
-												}))}
-												checked={whitelistYears}
-												onChange={(value) => {
-													setWhitelistYears(value);
-													setPageIndex(0);
-												}}
-											/>
-											<MenuGroupCheckboxes
-												options={programs.map(
-													(program) => ({
-														label: program,
-														value: program,
-													})
-												)}
-												checked={whitelistPrograms}
-												onChange={(value) => {
-													setWhitelistPrograms(value);
-													setPageIndex(0);
-												}}
-											/>
-										</>
-									)}
-								</DropdownMenu>
-							</div>
-						</th>
-						<th>
-							<div>
-								{__('Study period', 'wp-ftek-course-pages')}
-								<DropdownMenu icon="filter">
-									{() => (
-										<MenuGroupCheckboxes
-											options={studyPerionds.map(
-												(sp) => ({
-													label: formatSP([sp]),
-													value: sp,
-												})
-											)}
-											checked={whitelistSPs}
-											onChange={(value) => {
-												setWhitelistSPs(value);
-												setPageIndex(0);
-											}}
-										/>
-									)}
-								</DropdownMenu>
-							</div>
-						</th>
-						<th>{__('Links', 'wp-ftek-course-pages')}</th>
-					</tr>
-				</thead>
-				<tbody>
-					{filteredPosts
-						.slice(pageIndex * perPage, (pageIndex + 1) * perPage)
-						.map((item, i: number) => {
-							const meta: PostMetaShort = removePrefix(
-								item.meta as PostMeta
-							);
-
-							return (
-								<tr key={i}>
-									<td>
-										<a href={item.link}>
-											{item.title.rendered}
-										</a>
-									</td>
-									<td>{formatCode(meta.code)}</td>
-									<td>{formatCredits(meta.credits)}</td>
-									<td>
-										{formatProgramYear(
-											meta.year,
-											meta.programs
+			<div className="course-list-body">
+				{filteredPosts.length > 0 ? (
+					<table>
+						<thead>
+							<tr>
+								<th>
+									{__('Course page', 'wp-ftek-course-pages')}
+								</th>
+								<th>
+									{__('Course code', 'wp-ftek-course-pages')}
+								</th>
+								<th>{__('Credits', 'wp-ftek-course-pages')}</th>
+								<th>
+									<div>
+										{_x(
+											'Year',
+											'grade',
+											'wp-ftek-course-pages'
 										)}
-									</td>
-									<td>{formatSP(meta.study_perionds)}</td>
-									<td>
-										<CourseLinks meta={meta} />
-									</td>
-								</tr>
-							);
-						})}
-				</tbody>
-			</table>
+										<DropdownMenu icon="filter">
+											{() => (
+												<>
+													<MenuGroupCheckboxes
+														options={years.map(
+															(year) => ({
+																label: formatYear(
+																	year
+																),
+																value: year,
+															})
+														)}
+														checked={whitelistYears}
+														onChange={(value) => {
+															setWhitelistYears(
+																value
+															);
+															setPageIndex(0);
+														}}
+													/>
+													<MenuGroupCheckboxes
+														options={programs.map(
+															(program) => ({
+																label: program,
+																value: program,
+															})
+														)}
+														checked={
+															whitelistPrograms
+														}
+														onChange={(value) => {
+															setWhitelistPrograms(
+																value
+															);
+															setPageIndex(0);
+														}}
+													/>
+												</>
+											)}
+										</DropdownMenu>
+									</div>
+								</th>
+								<th>
+									<div>
+										{__(
+											'Study period',
+											'wp-ftek-course-pages'
+										)}
+										<DropdownMenu icon="filter">
+											{() => (
+												<MenuGroupCheckboxes
+													options={studyPerionds.map(
+														(sp) => ({
+															label: formatSP([
+																sp,
+															]),
+															value: sp,
+														})
+													)}
+													checked={whitelistSPs}
+													onChange={(value) => {
+														setWhitelistSPs(value);
+														setPageIndex(0);
+													}}
+												/>
+											)}
+										</DropdownMenu>
+									</div>
+								</th>
+								<th>{__('Links', 'wp-ftek-course-pages')}</th>
+							</tr>
+						</thead>
+						<tbody>
+							{filteredPosts
+								.slice(
+									pageIndex * perPage,
+									(pageIndex + 1) * perPage
+								)
+								.map((item, i: number) => {
+									const meta: PostMetaShort = removePrefix(
+										item.meta as PostMeta
+									);
+
+									return (
+										<tr key={i}>
+											<td>
+												<a href={item.link}>
+													{item.title.rendered}
+												</a>
+											</td>
+											<td>{formatCode(meta.code)}</td>
+											<td>
+												{formatCredits(meta.credits)}
+											</td>
+											<td>
+												{formatProgramYear(
+													meta.year,
+													meta.programs
+												)}
+											</td>
+											<td>
+												{formatSP(meta.study_perionds)}
+											</td>
+											<td>
+												<CourseLinks meta={meta} />
+											</td>
+										</tr>
+									);
+								})}
+						</tbody>
+					</table>
+				) : (
+					<p>{__('No courses found', 'wp-ftek-course-pages')}</p>
+				)}
+			</div>
 			<div className="course-list-footer">
 				<small>
 					{__(

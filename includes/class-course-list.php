@@ -1,6 +1,6 @@
 <?php
 /**
- * Course_Page_List definition
+ * Course_List definition
  *
  * @package ftek\wp-ftek-course-pages
  */
@@ -10,7 +10,7 @@ namespace Ftek\WPFtekCoursePages;
 /**
  * Class handling the course list block
  */
-class Course_Page_List {
+class Course_List {
 
 	/**
 	 * Adds hooks neccessary for page posts to function

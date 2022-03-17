@@ -74,8 +74,11 @@ $settings->add_hooks();
 $course_page_posts = new Course_Page_Posts( $settings );
 $course_page_posts->add_hooks();
 
-$course_page_list = new Course_Page_List();
-$course_page_list->add_hooks();
+$course_list = new Course_List();
+$course_list->add_hooks();
+
+$course_table = new Course_Table();
+$course_table->add_hooks();
 
 
 /**

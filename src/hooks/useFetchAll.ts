@@ -1,5 +1,5 @@
 import { useState, useEffect } from '@wordpress/element';
-import apiFetch, { APIFetchOptions } from '@wordpress/api-fetch';
+import apiFetch, { APIFetchOptions } from '@wordpress/api-fetch'; // eslint-disable-line import/named
 import { addQueryArgs } from '@wordpress/url';
 
 const PAGE_SIZE = 100;
@@ -25,7 +25,7 @@ export default function useFetchAll<T>(
 						setData([...data, ...morePosts]);
 					}
 				})
-				.catch(console.error);
+				.catch(console.error); // eslint-disable-line no-console
 		}
 	}, [data, deps]);
 

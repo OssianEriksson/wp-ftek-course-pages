@@ -1,0 +1,9 @@
+{
+	"apiVersion": 2,
+	"name": "wp-ftek-course-pages/course-table",
+	"title": "Course table",
+	"category": "widgets",
+	"textdomain": "wp-ftek-course-pages",
+	"style": "file:style-editor.css",
+	"editorScript": "file:editor.js"
+}

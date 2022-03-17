@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: WP Ftek Course Pages 0.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-ftek-course-"
 "pages\n"
-"POT-Creation-Date: 2022-03-17T15:10:00+00:00\n"
+"POT-Creation-Date: 2022-03-17T21:22:57+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Ossian Eriksson <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -167,12 +167,12 @@ msgid "Exam statistics"
 msgstr "Tentastatistik"
 
 #: build/blocks/course-info/editor.js:1 build/blocks/course-list/editor.js:1
-#: build/blocks/course-list/view.js:1
+#: build/blocks/course-list/view.js:1 build/blocks/course-table/editor.js:1
 msgid "Master's course"
 msgstr "Masterskurs"
 
 #: build/blocks/course-info/editor.js:1 build/blocks/course-list/editor.js:1
-#: build/blocks/course-list/view.js:1
+#: build/blocks/course-list/view.js:1 build/blocks/course-table/editor.js:1
 msgctxt "grade"
 msgid "Year %$1s"
 msgstr "Årskurs %$1s"
@@ -189,7 +189,7 @@ msgid "%$1s hec"
 msgstr "%$1s hp"
 
 #: build/blocks/course-info/editor.js:1 build/blocks/course-list/editor.js:1
-#: build/blocks/course-list/view.js:1
+#: build/blocks/course-list/view.js:1 build/blocks/course-table/editor.js:1
 msgctxt "grade"
 msgid "Year"
 msgstr "Årskurs"
@@ -311,6 +311,11 @@ msgid "Search"
 msgstr "Sök"
 
 #: build/blocks/course-list/editor.js:1 build/blocks/course-list/view.js:1
+#: build/blocks/course-table/editor.js:1
+msgid "No courses found"
+msgstr "Inga kurssidor hittades"
+
+#: build/blocks/course-list/editor.js:1 build/blocks/course-list/view.js:1
 msgid "Showing %$1s to %$2s of %$3s entries"
 msgstr "Visar %$1s till %$2s av %$3s poster"
 
@@ -323,6 +328,15 @@ msgstr "Föregående"
 msgctxt "course page"
 msgid "Next"
 msgstr "Nästa"
+
+#: build/blocks/course-table/editor.js:1
+msgid "Study period %$1s"
+msgstr "Läsperiod %$1s"
+
+#: build/blocks/course-table/editor.js:1
+msgctxt "grade"
+msgid "Y%$1s"
+msgstr "ÅK%$1s"
 
 #: build/entrypoints/settings.tsx.js:1
 msgid "The following error has occurred:"
@@ -353,3 +367,8 @@ msgstr "Kursinformation"
 msgctxt "block title"
 msgid "Course list"
 msgstr "Kurssidolista"
+
+#: build/blocks/course-table/block.json src/blocks/course-table/block.json
+msgctxt "block title"
+msgid "Course table"
+msgstr "Kurstabell"

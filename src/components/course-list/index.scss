@@ -21,18 +21,19 @@
 				margin-bottom: 8px;
 			}
 		}
-
-		.header-search {
-			width: 15rem;
-		}
 	}
 
-	table {
-		width: 100%;
+	.course-list-body {
+		display: block;
+		overflow-x: auto;
 
-		th > div {
-			display: flex;
-			align-items: center;
+		table {
+			width: 100%;
+
+			th > div {
+				display: flex;
+				align-items: center;
+			}
 		}
 	}
 
@@ -40,5 +41,6 @@
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-between;
+		margin-top: 2rem;
 	}
 }
