@@ -15,46 +15,34 @@ import {
 	RadioControl,
 } from '@wordpress/components';
 import { useState } from '@wordpress/element';
-import { key, trash } from '@wordpress/icons';
+import { trash } from '@wordpress/icons';
+import { __, _x } from '@wordpress/i18n';
+
+import UrlSVG from '../../components/url-svg';
+import CourseLinks from '../../components/course-links';
+import {
+	formatCredits,
+	formatCode,
+	formatYear,
+	formatSP,
+	formatProgramYear,
+} from '../../utils/meta-formatting';
+import { addPrefix, removePrefix } from '../../utils/meta-map-keys';
+import {
+	PostMeta,
+	PostMetaShort,
+	studyPerionds,
+	years,
+	programs,
+} from '../../types';
 
 import metadata from './block.json';
 
-import { __, _x } from '@wordpress/i18n';
-
 import './style.scss';
 
-const programs = ['F', 'TM'] as const;
-const studyPerionds = [1, 2, 3, 4] as const;
-const years = ['1', '2', '3', 'master'] as const;
+type BlockAttributes = PostMetaShort;
 
-type StudentRepresentative = { name: string; cid: string };
-const BlockAttributes = {
-	code: '' as string,
-	credits: 0 as number,
-	homepage_url: '' as string,
-	info_url: '' as string,
-	survey_url: '' as string,
-	student_representatives: [] as StudentRepresentative[],
-	study_perionds: [] as typeof studyPerionds[number][],
-	year: '' as '' | typeof years[number],
-	programs: [] as typeof programs[number][],
-	participant_count: 0 as number,
-};
-type BlockAttributes = typeof BlockAttributes;
-type PostMeta = {
-	[K in keyof BlockAttributes as `wp_ftek_course_pages_${K}`]: BlockAttributes[K];
-};
-
-declare const wpFtekCoursePages: { iconUrl: string };
-
-const coursePageIcon = (
-	<svg>
-		<image
-			style={{ width: '100%' }}
-			xlinkHref={wpFtekCoursePages.iconUrl}
-		/>
-	</svg>
-);
+declare const wpFtekCoursePagesCourseInfoEditor: { iconUrl: string };
 
 function RenderedCoursePage({
 	meta,
@@ -63,107 +51,25 @@ function RenderedCoursePage({
 	meta: BlockAttributes;
 	children: React.ReactNode;
 }): JSX.Element {
-	const linkItems: { text: string; url: string }[] = [
-		{
-			text: __('Course homepage', 'wp-ftek-course-pages'),
-			url: meta.homepage_url,
-		},
-		{
-			text: __('General info', 'wp-ftek-course-pages'),
-			url: meta.info_url,
-		},
-		{
-			text: __('Latest survey', 'wp-ftek-course-pages'),
-			url: meta.survey_url,
-		},
-		...(meta.code
-			? [
-					{
-						text: __('Exam statistics', 'wp-ftek-course-pages'),
-						url: `https://stats.ftek.se/${meta.code}`,
-					},
-			  ]
-			: []),
-	].filter((link) => link.url);
-
 	const studentRepresentativeItems = meta.student_representatives.filter(
 		(representative) => representative.name || representative.cid
 	);
 
 	return (
 		<>
-			<h2 className="course-banner">{`${
-				meta.code || __('Course Code', 'wp-ftek-course-pages')
-			} | ${meta.credits || 0} ${_x(
-				'hec',
-				'higher education credits',
-				'wp-ftek-course-pages'
-			)} | ${(() => {
-				if (meta.year === 'master') {
-					return __("Master's course", 'wp-ftek-course-pages');
-				}
-				if (meta.programs.length > 0) {
-					return meta.programs
-						.sort()
-						.map((program) => program + meta.year || '')
-						.join(' ');
-				}
-				return __('Program', 'wp-ftek-course-pages');
-			})()} | ${
-				meta.study_perionds.length > 0
-					? meta.study_perionds
-							.sort()
-							.map((a) => [[a]])
-							.reduce((previous, current) => {
-								const range = previous[previous.length - 1];
-								if (
-									current[0][0] - range[range.length - 1] ===
-									1
-								) {
-									range.push(current[0][0]);
-								} else {
-									previous.push(current[0]);
-								}
-								return previous;
-							})
-							.map((range) =>
-								_x(
-									'SP%$1s',
-									'study period',
-									'wp-ftek-course-pages'
-								).replace(
-									'%$1s',
-									range.length > 1
-										? range[0] +
-												'-' +
-												range[range.length - 1]
-										: range[0].toString()
-								)
-							)
-							.join(' ')
-					: _x('SP', 'study period', 'wp-ftek-course-pages')
-			}`}</h2>
+			<h2 className="course-banner">{`${formatCode(
+				meta.code
+			)} | ${formatCredits(meta.credits)} | ${formatProgramYear(
+				meta.year,
+				meta.programs
+			)} | ${formatSP(meta.study_perionds)}`}</h2>
 			<div className="course-layout">
 				<div className="course-content">{children}</div>
 				<div className="course-sidebar">
-					{linkItems.length > 0 && (
-						<>
-							<h3>{__('Links', 'wp-ftek-course-pages')}</h3>
-							<ul>
-								{linkItems.map((link, i) => (
-									<li key={i}>
-										<a
-											target="_blank"
-											rel="noopener noreferrer"
-											href={link.url}
-										>
-											{link.text}
-										</a>
-									</li>
-								))}
-							</ul>
-						</>
-					)}
+					<CourseLinks
+						header={<h3>{__('Links', 'wp-ftek-course-pages')}</h3>}
+						meta={meta}
+					/>
 					{studentRepresentativeItems.length > 0 && (
 						<>
 							<h3>
@@ -281,25 +187,13 @@ function EditableCoursePage({
 
 	const meta: BlockAttributes = {
 		...attributes,
-		...(postType === 'course-page'
-			? Object.fromEntries(
-					Object.entries(partialPostMeta).map(([k, v]) => [
-						k.replace('wp_ftek_course_pages_', ''),
-						v,
-					])
-			  )
-			: {}),
+		...(postType === 'course-page' ? removePrefix(partialPostMeta) : {}),
 	};
 	const setMeta = (m: BlockAttributes) => {
 		setAttributes(m);
-		setPostMeta(
-			Object.fromEntries(
-				Object.entries(m).map(([k, v]) => [
-					`wp_ftek_course_pages_${k}`,
-					v,
-				])
-			)
-		);
+		if (postType === 'course-page') {
+			setPostMeta(addPrefix(m));
+		}
 	};
 
 	return (
@@ -471,7 +365,7 @@ function EditableCoursePage({
 					<PanelRow>
 						<div className="wp-block-wp-ftek-course-pages-course-info-inspector">
 							<div className="panel-label">
-								{__('Study perionds', 'wp-ftek-course-pages')}
+								{__('Study period', 'wp-ftek-course-pages')}
 							</div>
 							{studyPerionds.map((sp, i) => (
 								<CheckboxControl
@@ -504,24 +398,10 @@ function EditableCoursePage({
 						<RadioControl
 							label={_x('Year', 'grade', 'wp-ftek-course-pages')}
 							selected={meta.year}
-							options={years.flatMap((year) => {
-								let label: string;
-								if (Number.isFinite(Number(year))) {
-									label = _x(
-										'Year %$1s',
-										'grade',
-										'wp-ftek-course-pages'
-									).replace('%$1s', year);
-								} else if (year === 'master') {
-									label = __(
-										"Master's course",
-										'wp-ftek-course-pages'
-									);
-								} else {
-									return [];
-								}
-								return { label, value: year };
-							})}
+							options={years.map((year) => ({
+								label: formatYear(year),
+								value: year,
+							}))}
 							onChange={(value) =>
 								setMeta({ ...meta, year: value })
 							}
@@ -598,7 +478,12 @@ function Edit({ attributes, setAttributes }): JSX.Element {
 			<EditableCoursePage
 				attributes={attributes}
 				setAttributes={setAttributes}
-				panelIcon={coursePageIcon}
+				panelIcon={
+					<UrlSVG
+						url={wpFtekCoursePagesCourseInfoEditor.iconUrl}
+						style={{ width: 24, height: 24, marginLeft: 12 }}
+					/>
+				}
 			/>
 		</div>
 	);
@@ -614,4 +499,8 @@ function Save({ attributes }): JSX.Element {
 	);
 }
 
-registerBlockType(metadata, { edit: Edit, save: Save, icon: coursePageIcon });
+registerBlockType(metadata, {
+	edit: Edit,
+	save: Save,
+	icon: <UrlSVG url={wpFtekCoursePagesCourseInfoEditor.iconUrl} />,
+});

@@ -108,7 +108,7 @@ class Settings {
 			'wp_ftek_course_pages_settings',
 			function(): void {
 				?>
-				<div id="wp_ftek_course_pages_settings" class="wrap"></div>
+				<div id="wp-ftek-course-pages-settings" class="wrap"></div>
 				<?php
 			}
 		);

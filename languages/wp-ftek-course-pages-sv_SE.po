@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: WP Ftek Course Pages 0.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-ftek-course-"
 "pages\n"
-"POT-Creation-Date: 2022-03-16T18:34:52+00:00\n"
+"POT-Creation-Date: 2022-03-17T15:10:00+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Ossian Eriksson <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,104 +36,105 @@ msgstr ""
 msgid "https://github.com/OssianEriksson"
 msgstr ""
 
-#: includes/class-course-page-posts.php:106
+#: includes/class-course-page-posts.php:172
 msgid "Course pages"
 msgstr "Kurssidor"
 
-#: includes/class-course-page-posts.php:107
+#: includes/class-course-page-posts.php:173
+#: build/blocks/course-list/editor.js:1 build/blocks/course-list/view.js:1
 msgid "Course page"
 msgstr "Kurssida"
 
-#: includes/class-course-page-posts.php:108
+#: includes/class-course-page-posts.php:174
 msgctxt "course page"
 msgid "Add new"
 msgstr "Skapa ny"
 
-#: includes/class-course-page-posts.php:109
+#: includes/class-course-page-posts.php:175
 msgid "Add New Course page"
 msgstr "Skapa ny kurssida"
 
-#: includes/class-course-page-posts.php:110
+#: includes/class-course-page-posts.php:176
 msgid "Edit Course page"
 msgstr "Redigera kurssida"
 
-#: includes/class-course-page-posts.php:111
+#: includes/class-course-page-posts.php:177
 msgid "New Course page"
 msgstr "Ny kurssida"
 
-#: includes/class-course-page-posts.php:112
+#: includes/class-course-page-posts.php:178
 msgid "View Course page"
 msgstr "Visa kurssida"
 
-#: includes/class-course-page-posts.php:113
+#: includes/class-course-page-posts.php:179
 msgid "View Course pages"
 msgstr "Visa kurssidor"
 
-#: includes/class-course-page-posts.php:114
+#: includes/class-course-page-posts.php:180
 msgid "Search Course pages"
 msgstr "Sök kurssidor"
 
-#: includes/class-course-page-posts.php:115
+#: includes/class-course-page-posts.php:181
 msgid "No Course pages found"
 msgstr "Inga kurssidor hittades"
 
-#: includes/class-course-page-posts.php:116
+#: includes/class-course-page-posts.php:182
 msgid "No Course pages found in Trash"
 msgstr "Inga kurssidor hittades i papperskorgen"
 
-#: includes/class-course-page-posts.php:117
+#: includes/class-course-page-posts.php:183
 msgid "All Course pages"
 msgstr "Alla kurssidor"
 
-#: includes/class-course-page-posts.php:118
+#: includes/class-course-page-posts.php:184
 msgid "Course page Attributes"
 msgstr "Kurssidoattribut"
 
-#: includes/class-course-page-posts.php:119
+#: includes/class-course-page-posts.php:185
 msgid "Insert into Course page"
 msgstr "Infoga i kurssida"
 
-#: includes/class-course-page-posts.php:120
+#: includes/class-course-page-posts.php:186
 msgid "Uploaded to this Course page"
 msgstr "Uppladdad till denna kurssida"
 
-#: includes/class-course-page-posts.php:121
+#: includes/class-course-page-posts.php:187
 msgid "Filter Course page list"
 msgstr "Filtrera kurssidolista"
 
-#: includes/class-course-page-posts.php:122
+#: includes/class-course-page-posts.php:188
 msgid "Course page list navigation"
 msgstr "Navigera kurssidolista"
 
-#: includes/class-course-page-posts.php:123
+#: includes/class-course-page-posts.php:189
 msgid "Course page list"
 msgstr "Kurssidolista"
 
-#: includes/class-course-page-posts.php:124
+#: includes/class-course-page-posts.php:190
 msgid "Course page published"
 msgstr "Kurssida publicerad"
 
-#: includes/class-course-page-posts.php:125
+#: includes/class-course-page-posts.php:191
 msgid "Course page reverted to draft"
 msgstr "Kurssida återställd från utkast"
 
-#: includes/class-course-page-posts.php:126
+#: includes/class-course-page-posts.php:192
 msgid "Course page scheduled"
 msgstr "Kurssida schemalagd"
 
-#: includes/class-course-page-posts.php:127
+#: includes/class-course-page-posts.php:193
 msgid "Course page updated"
 msgstr "Kurssida uppdaterad"
 
-#: includes/class-course-page-posts.php:128
+#: includes/class-course-page-posts.php:194
 msgid "Course page link"
 msgstr "Länk till kurssida"
 
-#: includes/class-course-page-posts.php:129
+#: includes/class-course-page-posts.php:195
 msgid "A link to a Course page"
 msgstr "En länk till en kurssida"
 
-#: includes/class-course-page-posts.php:131
+#: includes/class-course-page-posts.php:197
 msgid "Information about a course"
 msgstr "Information om en kurs"
 
@@ -145,50 +146,68 @@ msgstr "Kurssidoinställningar"
 msgid "Settings"
 msgstr "Inställningar"
 
-#: build/blocks/course-info/editor.js:1
+#: build/blocks/course-info/editor.js:1 build/blocks/course-list/editor.js:1
+#: build/blocks/course-list/view.js:1
 msgid "Course homepage"
 msgstr "Kurshemsida"
 
-#: build/blocks/course-info/editor.js:1
+#: build/blocks/course-info/editor.js:1 build/blocks/course-list/editor.js:1
+#: build/blocks/course-list/view.js:1
 msgid "General info"
 msgstr "Allmän information"
 
-#: build/blocks/course-info/editor.js:1
+#: build/blocks/course-info/editor.js:1 build/blocks/course-list/editor.js:1
+#: build/blocks/course-list/view.js:1
 msgid "Latest survey"
 msgstr "Senaste kursnämndsprotokoll"
 
-#: build/blocks/course-info/editor.js:1
+#: build/blocks/course-info/editor.js:1 build/blocks/course-list/editor.js:1
+#: build/blocks/course-list/view.js:1
 msgid "Exam statistics"
 msgstr "Tentastatistik"
 
-#: build/blocks/course-info/editor.js:1
-msgid "Course Code"
-msgstr "Kurskod"
-
-#: build/blocks/course-info/editor.js:1
-msgctxt "higher education credits"
-msgid "hec"
-msgstr "hp"
-
-#: build/blocks/course-info/editor.js:1
+#: build/blocks/course-info/editor.js:1 build/blocks/course-list/editor.js:1
+#: build/blocks/course-list/view.js:1
 msgid "Master's course"
 msgstr "Masterskurs"
 
-#: build/blocks/course-info/editor.js:1
-msgid "Program"
-msgstr "Program"
+#: build/blocks/course-info/editor.js:1 build/blocks/course-list/editor.js:1
+#: build/blocks/course-list/view.js:1
+msgctxt "grade"
+msgid "Year %$1s"
+msgstr "Årskurs %$1s"
 
-#: build/blocks/course-info/editor.js:1
+#: build/blocks/course-info/editor.js:1 build/blocks/course-list/editor.js:1
+#: build/blocks/course-list/view.js:1
+msgid "Course Code"
+msgstr "Kurskod"
+
+#: build/blocks/course-info/editor.js:1 build/blocks/course-list/editor.js:1
+#: build/blocks/course-list/view.js:1
+msgctxt "higher education credits"
+msgid "%$1s hec"
+msgstr "%$1s hp"
+
+#: build/blocks/course-info/editor.js:1 build/blocks/course-list/editor.js:1
+#: build/blocks/course-list/view.js:1
+msgctxt "grade"
+msgid "Year"
+msgstr "Årskurs"
+
+#: build/blocks/course-info/editor.js:1 build/blocks/course-list/editor.js:1
+#: build/blocks/course-list/view.js:1
 msgctxt "study period"
 msgid "SP%$1s"
 msgstr "LP%$1s"
 
-#: build/blocks/course-info/editor.js:1
+#: build/blocks/course-info/editor.js:1 build/blocks/course-list/editor.js:1
+#: build/blocks/course-list/view.js:1
 msgctxt "study period"
 msgid "SP"
 msgstr "LP"
 
-#: build/blocks/course-info/editor.js:1
+#: build/blocks/course-info/editor.js:1 build/blocks/course-list/editor.js:1
+#: build/blocks/course-list/view.js:1
 msgid "Links"
 msgstr "Länkar"
 
@@ -221,11 +240,13 @@ msgstr "Veckobladeriet"
 msgid "Course Page"
 msgstr "Kurssida"
 
-#: build/blocks/course-info/editor.js:1
+#: build/blocks/course-info/editor.js:1 build/blocks/course-list/editor.js:1
+#: build/blocks/course-list/view.js:1
 msgid "Course code"
 msgstr "Kurskod"
 
-#: build/blocks/course-info/editor.js:1
+#: build/blocks/course-info/editor.js:1 build/blocks/course-list/editor.js:1
+#: build/blocks/course-list/view.js:1
 msgid "Credits"
 msgstr "Högskolepoäng"
 
@@ -259,19 +280,10 @@ msgctxt "student representative"
 msgid "Add"
 msgstr "Ny"
 
-#: build/blocks/course-info/editor.js:1
-msgid "Study perionds"
-msgstr "Läsperioder"
-
-#: build/blocks/course-info/editor.js:1
-msgctxt "grade"
-msgid "Year"
-msgstr "Årskurs"
-
-#: build/blocks/course-info/editor.js:1
-msgctxt "grade"
-msgid "Year %$1s"
-msgstr "Årskurs %$1s"
+#: build/blocks/course-info/editor.js:1 build/blocks/course-list/editor.js:1
+#: build/blocks/course-list/view.js:1
+msgid "Study period"
+msgstr "Läsperiod"
 
 #: build/blocks/course-info/editor.js:1
 msgid "Progammes"
@@ -284,6 +296,33 @@ msgstr "Ungefärligt antal deltagare"
 #: build/blocks/course-info/editor.js:1
 msgid "Used for sorting courses"
 msgstr "Används för att sortera kurser"
+
+#: build/blocks/course-list/editor.js:1 build/blocks/course-list/view.js:1
+msgid "Entries to display"
+msgstr "Poster att visa"
+
+#: build/blocks/course-list/editor.js:1 build/blocks/course-list/view.js:1
+msgid "Clear filters"
+msgstr "Återställ filter"
+
+#: build/blocks/course-list/editor.js:1 build/blocks/course-list/view.js:1
+msgctxt "course page"
+msgid "Search"
+msgstr "Sök"
+
+#: build/blocks/course-list/editor.js:1 build/blocks/course-list/view.js:1
+msgid "Showing %$1s to %$2s of %$3s entries"
+msgstr "Visar %$1s till %$2s av %$3s poster"
+
+#: build/blocks/course-list/editor.js:1 build/blocks/course-list/view.js:1
+msgctxt "course page"
+msgid "Previous"
+msgstr "Föregående"
+
+#: build/blocks/course-list/editor.js:1 build/blocks/course-list/view.js:1
+msgctxt "course page"
+msgid "Next"
+msgstr "Nästa"
 
 #: build/entrypoints/settings.tsx.js:1
 msgid "The following error has occurred:"
@@ -309,3 +348,8 @@ msgstr "Kurssidoinställningar"
 msgctxt "block title"
 msgid "Course info"
 msgstr "Kursinformation"
+
+#: build/blocks/course-list/block.json src/blocks/course-list/block.json
+msgctxt "block title"
+msgid "Course list"
+msgstr "Kurssidolista"

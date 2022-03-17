@@ -157,7 +157,7 @@ class Course_Page_Posts {
 		);
 		wp_add_inline_script(
 			'wp-ftek-course-pages-course-info-editor-script',
-			'const wpFtekCoursePages = ' . wp_json_encode(
+			'const wpFtekCoursePagesCourseInfoEditor = ' . wp_json_encode(
 				array(
 					'iconUrl' => plugins_url( '/assets/open-book.svg', PLUGIN_FILE ),
 				)
