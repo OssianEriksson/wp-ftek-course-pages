@@ -15,7 +15,7 @@ import {
 	RadioControl,
 } from '@wordpress/components';
 import { useState } from '@wordpress/element';
-import { trash } from '@wordpress/icons';
+import { key, trash } from '@wordpress/icons';
 
 import metadata from './block.json';
 
@@ -28,17 +28,21 @@ const studyPerionds = [1, 2, 3, 4] as const;
 const years = ['1', '2', '3', 'master'] as const;
 
 type StudentRepresentative = { name: string; cid: string };
+const BlockAttributes = {
+	code: '' as string,
+	credits: 0 as number,
+	homepage_url: '' as string,
+	info_url: '' as string,
+	survey_url: '' as string,
+	student_representatives: [] as StudentRepresentative[],
+	study_perionds: [] as typeof studyPerionds[number][],
+	year: '' as '' | typeof years[number],
+	programs: [] as typeof programs[number][],
+	participant_count: 0 as number,
+};
+type BlockAttributes = typeof BlockAttributes;
 type PostMeta = {
-	code: string;
-	credits: number;
-	homepage_url: string;
-	info_url: string;
-	survey_url: string;
-	student_representatives: StudentRepresentative[];
-	study_perionds: typeof studyPerionds[number][];
-	year: '' | typeof years[number];
-	programs: typeof programs[number][];
-	participant_count: number;
+	[K in keyof BlockAttributes as `wp_ftek_course_pages_${K}`]: BlockAttributes[K];
 };
 
 declare const wpFtekCoursePages: { iconUrl: string };
@@ -56,7 +60,7 @@ function RenderedCoursePage({
 	meta,
 	children,
 }: {
-	meta: PostMeta;
+	meta: BlockAttributes;
 	children: React.ReactNode;
 }): JSX.Element {
 	const linkItems: { text: string; url: string }[] = [
@@ -214,8 +218,8 @@ function EditableCoursePage({
 	setAttributes,
 	panelIcon,
 }: {
-	attributes: PostMeta;
-	setAttributes: (a: PostMeta) => void;
+	attributes: BlockAttributes;
+	setAttributes: (a: BlockAttributes) => void;
 	panelIcon: JSX.Element;
 }): JSX.Element {
 	const [creditsText, setCreditsText] = useState<string>(null);
@@ -228,7 +232,7 @@ function EditableCoursePage({
 			select('core/blocks').getBlockType('wp-drive-list/drive-list'),
 		[]
 	);
-	let innerBlocksTemplate: Block[] = [
+	const innerBlocksTemplate: Block[] = [
 		[
 			'core/heading',
 			{ content: __('Description', 'wp-ftek-course-pages'), level: 3 },
@@ -270,21 +274,33 @@ function EditableCoursePage({
 		(select) => select('core/editor').getCurrentPostType(),
 		[]
 	);
-	const [postMeta, setPostMeta] = useEntityProp('postType', postType, 'meta');
+	const [partialPostMeta, setPostMeta]: [
+		Partial<PostMeta>,
+		(m: Partial<PostMeta>) => void
+	] = useEntityProp('postType', postType, 'meta');
 
-	const [meta, setMeta]: [PostMeta, (m: PostMeta) => void] =
-		'wp_ftek_course_pages_meta' in postMeta
-			? [
-					postMeta.wp_ftek_course_pages_meta,
-					(m: PostMeta) => {
-						setAttributes(m);
-						setPostMeta({
-							...postMeta,
-							wp_ftek_course_pages_meta: m,
-						});
-					},
-			  ]
-			: [attributes, setAttributes];
+	const meta: BlockAttributes = {
+		...attributes,
+		...(postType === 'course-page'
+			? Object.fromEntries(
+					Object.entries(partialPostMeta).map(([k, v]) => [
+						k.replace('wp_ftek_course_pages_', ''),
+						v,
+					])
+			  )
+			: {}),
+	};
+	const setMeta = (m: BlockAttributes) => {
+		setAttributes(m);
+		setPostMeta(
+			Object.fromEntries(
+				Object.entries(m).map(([k, v]) => [
+					`wp_ftek_course_pages_${k}`,
+					v,
+				])
+			)
+		);
+	};
 
 	return (
 		<>
@@ -496,7 +512,7 @@ function EditableCoursePage({
 										'grade',
 										'wp-ftek-course-pages'
 									).replace('%$1s', year);
-								} else if (year == 'master') {
+								} else if (year === 'master') {
 									label = __(
 										"Master's course",
 										'wp-ftek-course-pages'

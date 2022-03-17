@@ -12,17 +12,83 @@ namespace Ftek\WPFtekCoursePages;
  */
 class Course_Page_Posts {
 
-	const DEFAULT_META = array(
-		'code'                    => '',
-		'credits'                 => 0,
-		'homepage_url'            => '',
-		'info_url'                => '',
-		'survey_url'              => '',
-		'student_representatives' => array(),
-		'study_perionds'          => array(),
-		'year'                    => '',
-		'programs'                => array(),
-		'participant_count'       => 0,
+	const META_FIELDS = array(
+		'code'                    => array(
+			'default' => '',
+			'schema'  => array( 'type' => 'string' ),
+		),
+		'credits'                 => array(
+			'default' => 0,
+			'schema'  => array(
+				'type'    => 'number',
+				'minimum' => 0,
+			),
+		),
+		'homepage_url'            => array(
+			'default' => '',
+			'schema'  => array( 'type' => 'string' ),
+		),
+		'info_url'                => array(
+			'default' => '',
+			'schema'  => array( 'type' => 'string' ),
+		),
+		'survey_url'              => array(
+			'default' => '',
+			'schema'  => array( 'type' => 'string' ),
+		),
+		'student_representatives' => array(
+			'default' => array(),
+			'schema'  => array(
+				'type'  => 'array',
+				'items' => array(
+					'type'       => 'object',
+					'properties' => array(
+						'name' => array(
+							'type'     => 'string',
+							'required' => true,
+						),
+						'cid'  => array(
+							'type'     => 'string',
+							'required' => true,
+						),
+					),
+				),
+			),
+		),
+		'study_perionds'          => array(
+			'default' => array(),
+			'schema'  => array(
+				'type'  => 'array',
+				'items' => array(
+					'type' => 'number',
+					'enum' => array( 1, 2, 3, 4 ),
+				),
+			),
+		),
+		'year'                    => array(
+			'default' => '',
+			'schema'  => array(
+				'type' => 'string',
+				'enum' => array( '', '1', '2', '3', 'master' ),
+			),
+		),
+		'programs'                => array(
+			'default' => array(),
+			'schema'  => array(
+				'type'  => 'array',
+				'items' => array(
+					'type' => 'string',
+					'enum' => array( 'F', 'TM' ),
+				),
+			),
+		),
+		'participant_count'       => array(
+			'default' => 0,
+			'schema'  => array(
+				'type'    => 'number',
+				'minimum' => 0,
+			),
+		),
 	);
 
 	/**
@@ -60,11 +126,11 @@ class Course_Page_Posts {
 	 * @param mixed  $meta_value Metadata value.
 	 */
 	public function update_post_slug( ?bool $check, int $object_id, string $meta_key, $meta_value ): ?bool {
-		if ( 'wp_ftek_course_pages_meta' === $meta_key && $meta_value['code'] ?? false ) {
+		if ( 'wp_ftek_course_pages_code' === $meta_key && $meta_value ) {
 			wp_update_post(
 				array(
 					'ID'        => $object_id,
-					'post_name' => $meta_value['code'],
+					'post_name' => $meta_value,
 				)
 			);
 		}
@@ -151,67 +217,19 @@ class Course_Page_Posts {
 			)
 		);
 
-		register_post_meta(
-			'course-page',
-			'wp_ftek_course_pages_meta',
-			array(
-				'type'         => 'object',
-				'single'       => true,
-				'default'      => self::DEFAULT_META,
-				'show_in_rest' => array(
-					'schema' => array(
-						'type'       => 'object',
-						'properties' => array(
-							'code'                    => array( 'type' => 'string' ),
-							'credits'                 => array(
-								'type'    => 'number',
-								'minimum' => 0,
-							),
-							'homepage_url'            => array( 'type' => 'string' ),
-							'info_url'                => array( 'type' => 'string' ),
-							'survey_url'              => array( 'type' => 'string' ),
-							'student_representatives' => array(
-								'type'  => 'array',
-								'items' => array(
-									'type'       => 'object',
-									'properties' => array(
-										'name' => array(
-											'type'     => 'string',
-											'required' => true,
-										),
-										'cid'  => array(
-											'type'     => 'string',
-											'required' => true,
-										),
-									),
-								),
-							),
-							'study_perionds'          => array(
-								'type'  => 'array',
-								'items' => array(
-									'type' => 'number',
-									'enum' => array( 1, 2, 3, 4 ),
-								),
-							),
-							'year'                    => array(
-								'type' => 'string',
-								'enum' => array( '', '1', '2', '3', 'master' ),
-							),
-							'programs'                => array(
-								'type'  => 'array',
-								'items' => array(
-									'type' => 'string',
-									'enum' => array( 'F', 'TM' ),
-								),
-							),
-							'participant_count'       => array(
-								'type'    => 'number',
-								'minimum' => 0,
-							),
-						),
+		foreach ( self::META_FIELDS as $name => $meta_field ) {
+			register_post_meta(
+				'course-page',
+				'wp_ftek_course_pages_' . $name,
+				array(
+					'type'         => $meta_field['schema']['type'],
+					'single'       => true,
+					'default'      => $meta_field['default'],
+					'show_in_rest' => array(
+						'schema' => $meta_field['schema'],
 					),
-				),
-			)
-		);
+				)
+			);
+		}
 	}
 }
