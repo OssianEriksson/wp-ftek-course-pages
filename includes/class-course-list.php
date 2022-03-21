@@ -30,6 +30,11 @@ class Course_List {
 			'wp-ftek-course-pages',
 			PLUGIN_ROOT . '/languages'
 		);
+		wp_set_script_translations(
+			'wp-ftek-course-pages-course-list-view-script',
+			'wp-ftek-course-pages',
+			PLUGIN_ROOT . '/languages'
+		);
 		wp_add_inline_script(
 			'wp-ftek-course-pages-course-list-editor-script',
 			'const wpFtekCoursePagesCourseListEditor = ' . wp_json_encode(

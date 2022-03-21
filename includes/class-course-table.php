@@ -29,6 +29,11 @@ class Course_Table {
 			'wp-ftek-course-pages',
 			PLUGIN_ROOT . '/languages'
 		);
+		wp_set_script_translations(
+			'wp-ftek-course-pages-course-table-view-script',
+			'wp-ftek-course-pages',
+			PLUGIN_ROOT . '/languages'
+		);
 		wp_add_inline_script(
 			'wp-ftek-course-pages-course-table-editor-script',
 			'const wpFtekCoursePagesCourseTableEditor = ' . wp_json_encode(
