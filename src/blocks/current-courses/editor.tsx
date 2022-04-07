@@ -5,7 +5,13 @@ import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 
 import UrlSVG from '../../components/url-svg';
-import { CoursePage, StudyPeriond, studyPerionds, Year } from '../../types';
+import {
+	CoursePage,
+	programs,
+	StudyPeriond,
+	studyPerionds,
+	Year,
+} from '../../types';
 import useFetchAll from '../../hooks/useFetchAll';
 import { Option } from '../../components/settings-page';
 
@@ -15,13 +21,19 @@ import { formatYear } from '../../utils/meta-formatting';
 declare const wpFtekCoursePagesCurrentCoursesEditor: { iconUrl: string };
 
 function CurrentCourses(): JSX.Element {
+	const [option, setOption] = useState<Option>(null);
 	const [currentSp, setCurrentSp] = useState<StudyPeriond>(studyPerionds[0]);
+
 	useEffect(() => {
 		apiFetch({ path: '/wp-ftek-course-pages/v1/settings' }).then(
 			(response) => {
+				const opt = response as Option;
+
+				setOption(() => opt);
+
 				const currentDate = new Date();
 
-				const sps = (response as Option).study_periods_end
+				const sps = opt.study_periods_end
 					.map((sp, i) => ({
 						end: new Date(
 							currentDate.getFullYear(),
@@ -34,11 +46,11 @@ function CurrentCourses(): JSX.Element {
 
 				for (let i = sps.length - 1; i >= 0; i--) {
 					if (currentDate > sps[i].end) {
-						setCurrentSp(sps[(i + 1) % sps.length].sp);
+						setCurrentSp(() => sps[(i + 1) % sps.length].sp);
 						return;
 					}
 				}
-				setCurrentSp(sps[0].sp);
+				setCurrentSp(() => sps[0].sp);
 			}
 		);
 	}, []);
@@ -61,9 +73,32 @@ function CurrentCourses(): JSX.Element {
 							b.meta.wp_ftek_course_pages_participant_count -
 							a.meta.wp_ftek_course_pages_participant_count
 					);
+
 				return (
 					<Fragment key={year}>
-						<h3>{formatYear(year)}</h3>
+						<h3
+							dangerouslySetInnerHTML={{
+								__html:
+									formatYear(year) +
+									' ' +
+									__(
+										'(Schedule %$1s)',
+										'wp-ftek-course-pages'
+									).replace(
+										'%$1s',
+										programs
+											.map(
+												(program) =>
+													`<a href="${
+														option?.schedules?.[
+															program
+														] || ''
+													}">${program}</a>`
+											)
+											.join(', ')
+									),
+							}}
+						/>
 						{currentPosts.length > 0 ? (
 							<ul>
 								{currentPosts.map((post, j) => (

@@ -1,4 +1,4 @@
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, Fragment } from '@wordpress/element';
 import {
 	Placeholder,
 	Spinner,
@@ -8,16 +8,18 @@ import {
 	SelectControl,
 } from '@wordpress/components';
 import { store as noticesStore } from '@wordpress/notices';
-import { __ } from '@wordpress/i18n';
+import { __, _x } from '@wordpress/i18n';
 import { useDispatch, useSelect } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
 
 import './index.scss';
-import { studyPerionds } from '../../types';
+import { Program, programs, studyPerionds, Year } from '../../types';
+import { formatProgramYear } from '../../utils/meta-formatting';
 
 export type Option = {
 	slug: string;
 	study_periods_end: { month: number; day: number }[];
+	schedules: { [P in Program]: string }[];
 };
 
 const ErrorDisplay = (error: any): JSX.Element => (
@@ -143,6 +145,48 @@ const SettingsContent = (): JSX.Element => {
 					/>
 				</div>
 			))}
+			<h2>{__('Schedules', 'wp-ftek-course-pages')}</h2>
+			<p>
+				{__(
+					'Enter the URL to the schedule for each class. The schedule should begin at the current week and end one year later.',
+					'wp-ftek-course-pages'
+				)}
+			</p>
+			{(['1', '2', '3'] as Exclude<Year, 'master'>[]).map((year, i) => {
+				const yeari = Number(year) - 1;
+				return (
+					<Fragment key={i}>
+						<h3>
+							{_x(
+								'Year %$1s',
+								'grade',
+								'wp-ftek-course-pages'
+							).replace('%$1s', year)}
+						</h3>
+						{programs.map((program, j) => (
+							<TextControl
+								key={j}
+								label={__(
+									'URL to schedule for %$1s',
+									'wp-ftek-course-pages'
+								).replace(
+									'%$1s',
+									formatProgramYear(year, [program])
+								)}
+								value={option.schedules[yeari][program]}
+								onChange={(value: string) => {
+									const schedules = [...option.schedules];
+									schedules[yeari] = {
+										...schedules[yeari],
+										[program]: value,
+									};
+									setOption({ ...option, schedules });
+								}}
+							/>
+						))}
+					</Fragment>
+				);
+			})}
 			<h2>{__('Miscellaneous settings', 'wp-ftek-course-pages')}</h2>
 			<TextControl
 				label={__('Course page slug', 'wp-ftek-course-pages')}

@@ -32,6 +32,20 @@ class Settings {
 				'day'   => 1,
 			),
 		),
+		'schedules'         => array(
+			array(
+				'F'  => '',
+				'TM' => '',
+			),
+			array(
+				'F'  => '',
+				'TM' => '',
+			),
+			array(
+				'F'  => '',
+				'TM' => '',
+			),
+		),
 	);
 
 	/**
@@ -83,6 +97,7 @@ class Settings {
 						array(
 							'slug'              => $request['slug'],
 							'study_periods_end' => $request['study_periods_end'],
+							'schedules'         => $request['schedules'],
 						)
 					);
 
@@ -105,6 +120,23 @@ class Settings {
 								),
 								'day'   => array(
 									'type'     => 'number',
+									'required' => true,
+								),
+							),
+						),
+					),
+					'schedules'         => array(
+						'type'     => 'array',
+						'required' => true,
+						'items'    => array(
+							'type'       => 'object',
+							'properties' => array(
+								'F'  => array(
+									'type'     => 'string',
+									'required' => true,
+								),
+								'TM' => array(
+									'type'     => 'string',
 									'required' => true,
 								),
 							),
