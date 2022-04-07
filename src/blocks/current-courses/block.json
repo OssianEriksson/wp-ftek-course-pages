@@ -4,5 +4,6 @@
 	"title": "Current Courses",
 	"category": "widgets",
 	"textdomain": "wp-ftek-course-pages",
+	"viewScript": "file:view.js",
 	"editorScript": "file:editor.js"
 }

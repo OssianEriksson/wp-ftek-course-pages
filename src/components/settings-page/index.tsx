@@ -13,14 +13,8 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
 
 import './index.scss';
-import { Program, programs, studyPerionds, Year } from '../../types';
+import { Option, programs, studyPerionds, Year } from '../../types';
 import { formatProgramYear } from '../../utils/meta-formatting';
-
-export type Option = {
-	slug: string;
-	study_periods_end: { month: number; day: number }[];
-	schedules: { [P in Program]: string }[];
-};
 
 const ErrorDisplay = (error: any): JSX.Element => (
 	<>

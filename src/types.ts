@@ -40,3 +40,9 @@ export type CoursePage = {
 		rendered: string;
 	};
 };
+
+export type Option = {
+	slug: string;
+	study_periods_end: { month: number; day: number }[];
+	schedules: { [P in Program]: string }[];
+};
