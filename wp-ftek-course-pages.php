@@ -80,6 +80,9 @@ $course_list->add_hooks();
 $course_table = new Course_Table();
 $course_table->add_hooks();
 
+$current_courses = new Current_Courses();
+$current_courses->add_hooks();
+
 
 /**
  * Plugin activation setup

@@ -1,0 +1,8 @@
+{
+	"apiVersion": 2,
+	"name": "wp-ftek-course-pages/current-courses",
+	"title": "Current Courses",
+	"category": "widgets",
+	"textdomain": "wp-ftek-course-pages",
+	"editorScript": "file:editor.js"
+}

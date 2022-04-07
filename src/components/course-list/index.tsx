@@ -4,7 +4,7 @@ import {
 	SelectControl,
 	DropdownMenu,
 } from '@wordpress/components';
-import { useState, useEffect } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 import { __, _x } from '@wordpress/i18n';
 
 import {

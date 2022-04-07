@@ -13,7 +13,25 @@ namespace Ftek\WPFtekCoursePages;
 class Settings {
 
 	const DEFAULT_SETTINGS = array(
-		'slug' => 'course',
+		'slug'              => 'course',
+		'study_periods_end' => array(
+			array(
+				'month' => 1,
+				'day'   => 1,
+			),
+			array(
+				'month' => 1,
+				'day'   => 1,
+			),
+			array(
+				'month' => 1,
+				'day'   => 1,
+			),
+			array(
+				'month' => 1,
+				'day'   => 1,
+			),
+		),
 	);
 
 	/**
@@ -63,16 +81,34 @@ class Settings {
 				'callback'            => function( \WP_REST_Request $request ): array {
 					$this->update_settings(
 						array(
-							'slug' => $request['slug'],
+							'slug'              => $request['slug'],
+							'study_periods_end' => $request['study_periods_end'],
 						)
 					);
 
 					return $this->get();
 				},
 				'args'                => array(
-					'slug' => array(
+					'slug'              => array(
 						'type'     => 'string',
 						'required' => true,
+					),
+					'study_periods_end' => array(
+						'type'     => 'array',
+						'required' => true,
+						'items'    => array(
+							'type'       => 'object',
+							'properties' => array(
+								'month' => array(
+									'type'     => 'number',
+									'required' => true,
+								),
+								'day'   => array(
+									'type'     => 'number',
+									'required' => true,
+								),
+							),
+						),
 					),
 				),
 				'permission_callback' => function(): bool {
