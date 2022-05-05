@@ -1,9 +1,0 @@
-{
-	"apiVersion": 2,
-	"name": "ftek-courses/current-courses",
-	"title": "Current Courses",
-	"category": "widgets",
-	"textdomain": "ftek-courses",
-	"viewScript": "file:view.js",
-	"editorScript": "file:editor.js"
-}
