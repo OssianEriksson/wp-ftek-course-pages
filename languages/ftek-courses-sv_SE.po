@@ -1,11 +1,10 @@
 # Copyright (C) 2022 Ossian Eriksson
-# This file is distributed under the same license as the WP Ftek Course Pages plugin.
+# This file is distributed under the same license as the Ftek Course Pages plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Ftek Course Pages 0.1.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-ftek-course-"
-"pages\n"
-"POT-Creation-Date: 2022-03-21T09:00:49+00:00\n"
+"Project-Id-Version: Ftek Course Pages 0.2.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ftek-courses\n"
+"POT-Creation-Date: 2022-05-05T18:09:13+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Ossian Eriksson <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,16 +13,20 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: WP-CLI 2.6.0\n"
-"X-Domain: wp-ftek-course-pages\n"
+"X-Domain: ftek-courses\n"
 
 #. Plugin Name of the plugin
-msgid "WP Ftek Course Pages"
-msgstr "WP Ftek kurssidor"
+msgid "Ftek Course Pages"
+msgstr "Ftek kurssidor"
+
+#. Plugin URI of the plugin
+msgid "https://github.com/fysikteknologsektionen/ftek-courses"
+msgstr ""
 
 #. Description of the plugin
 msgid ""
 "WordPress plugin for displaying course information at the Physics division "
-"of Chalmers University of Technology."
+"of Chalmers University of Technology"
 msgstr ""
 "WordPress-plugin för att visa kursinformation vid fysikteknologsektionen, "
 "Chalmers tekniska högskola."
@@ -138,11 +141,11 @@ msgstr "En länk till en kurssida"
 msgid "Information about a course"
 msgstr "Information om en kurs"
 
-#: includes/class-settings.php:105
+#: includes/class-settings.php:173
 msgid "Course pages settings"
 msgstr "Kurssidoinställningar"
 
-#: includes/class-settings.php:106 includes/class-settings.php:150
+#: includes/class-settings.php:174 includes/class-settings.php:218
 msgid "Settings"
 msgstr "Inställningar"
 
@@ -168,13 +171,15 @@ msgstr "Tentastatistik"
 
 #: build/blocks/course-info/editor.js:1 build/blocks/course-list/editor.js:1
 #: build/blocks/course-list/view.js:1 build/blocks/course-table/editor.js:1
-#: build/blocks/course-table/view.js:1
+#: build/blocks/course-table/view.js:1 build/blocks/current-courses/editor.js:1
+#: build/blocks/current-courses/view.js:1 build/settings.tsx.js:1
 msgid "Master's course"
 msgstr "Masterskurs"
 
 #: build/blocks/course-info/editor.js:1 build/blocks/course-list/editor.js:1
 #: build/blocks/course-list/view.js:1 build/blocks/course-table/editor.js:1
-#: build/blocks/course-table/view.js:1
+#: build/blocks/course-table/view.js:1 build/blocks/current-courses/editor.js:1
+#: build/blocks/current-courses/view.js:1 build/settings.tsx.js:1
 msgctxt "grade"
 msgid "Year %$1s"
 msgstr "Årskurs %$1s"
@@ -192,7 +197,7 @@ msgstr "%$1s hp"
 
 #: build/blocks/course-info/editor.js:1 build/blocks/course-list/editor.js:1
 #: build/blocks/course-list/view.js:1 build/blocks/course-table/editor.js:1
-#: build/blocks/course-table/view.js:1
+#: build/blocks/course-table/view.js:1 build/settings.tsx.js:1
 msgctxt "grade"
 msgid "Year"
 msgstr "Årskurs"
@@ -302,18 +307,16 @@ msgstr "Används för att sortera kurser"
 
 #: build/blocks/course-info/editor.js:1 build/blocks/course-table/editor.js:1
 #: build/blocks/course-table/view.js:1
-#, fuzzy
 msgid "Elective course"
-msgstr "Masterskurs"
+msgstr "Valbar kurs"
 
 #: build/blocks/course-info/editor.js:1
-#, fuzzy
 msgid "Comment"
-msgstr "Veckobladeriet"
+msgstr "Kommentar"
 
 #: build/blocks/course-info/editor.js:1
 msgid "Shown as footnote in course table"
-msgstr ""
+msgstr "Visas som fotnot i kurstabeller"
 
 #: build/blocks/course-list/editor.js:1 build/blocks/course-list/view.js:1
 msgid "Entries to display"
@@ -330,6 +333,8 @@ msgstr "Sök"
 
 #: build/blocks/course-list/editor.js:1 build/blocks/course-list/view.js:1
 #: build/blocks/course-table/editor.js:1 build/blocks/course-table/view.js:1
+#: build/blocks/current-courses/editor.js:1
+#: build/blocks/current-courses/view.js:1
 msgid "No courses found"
 msgstr "Inga kurssidor hittades"
 
@@ -356,23 +361,67 @@ msgctxt "grade"
 msgid "Y%$1s"
 msgstr "ÅK%$1s"
 
-#: build/entrypoints/settings.tsx.js:1
+#: build/blocks/current-courses/editor.js:1
+#: build/blocks/current-courses/view.js:1
+msgid "(Schedule %$1s)"
+msgstr "(Schema %$1s)"
+
+#: build/settings.tsx.js:1
 msgid "The following error has occurred:"
 msgstr "Följande fel har inträffat:"
 
-#: build/entrypoints/settings.tsx.js:1
+#: build/settings.tsx.js:1
+msgid "Dates"
+msgstr "Datum"
+
+#: build/settings.tsx.js:1
+msgid "Enter the final date of each study period."
+msgstr "Ange det sista datumet i varje läsperiod."
+
+#: build/settings.tsx.js:1
+msgid "Last day of study period %$1s"
+msgstr "Sista dagen i läsperiod %$1s"
+
+#: build/settings.tsx.js:1
+msgid "Month"
+msgstr "Månad"
+
+#: build/settings.tsx.js:1
+msgid "Day"
+msgstr "Dag"
+
+#: build/settings.tsx.js:1
+msgid "Schedules"
+msgstr "Scheman"
+
+#: build/settings.tsx.js:1
+msgid ""
+"Enter the URL to the schedule for each class. The schedule should begin at "
+"the current week and end one year later."
+msgstr "Ange URL:en till schemat för varje klass. Schemat ska börja vid den "
+"nuvarande veckan och sluta ett år senare."
+
+#: build/settings.tsx.js:1
+msgid "URL to schedule for %$1s"
+msgstr "URL till schemat för %$1s"
+
+#: build/settings.tsx.js:1
+msgid "Miscellaneous settings"
+msgstr "Övriga inställningar"
+
+#: build/settings.tsx.js:1
 msgid "Course page slug"
 msgstr "Kurssidans slug"
 
-#: build/entrypoints/settings.tsx.js:1
+#: build/settings.tsx.js:1
 msgid "Settings saved."
 msgstr "Inställningarna sparade."
 
-#: build/entrypoints/settings.tsx.js:1
+#: build/settings.tsx.js:1
 msgid "Save changes"
 msgstr "Spara ändringar"
 
-#: build/entrypoints/settings.tsx.js:1
+#: build/settings.tsx.js:1
 msgid "Course Pages Settings"
 msgstr "Kurssidoinställningar"
 
@@ -390,3 +439,9 @@ msgstr "Kurssidolista"
 msgctxt "block title"
 msgid "Course table"
 msgstr "Kurstabell"
+
+#: build/blocks/current-courses/block.json
+#: src/blocks/current-courses/block.json
+msgctxt "block title"
+msgid "Current Courses"
+msgstr "Pågående kurser"

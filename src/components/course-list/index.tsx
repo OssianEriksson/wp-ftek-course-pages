@@ -27,7 +27,7 @@ import CourseLinks from '../../components/course-links';
 import { removePrefix } from '../../utils/meta-map-keys';
 import MenuGroupCheckboxes from '../menu-group-checkboxes';
 
-import './index.scss';
+import styles from './index.module.scss';
 import hasIntersection from '../../utils/includesAny';
 import useFetchAll from '../../hooks/useFetchAll';
 
@@ -72,15 +72,12 @@ function CourseList(): JSX.Element {
 		);
 
 	return (
-		<div className="wp-ftek-course-pages-course-list">
-			<div className="course-list-header">
-				<div className="header-controls">
-					<div className="entries-count">
+		<>
+			<div className={styles['course-list-header']}>
+				<div className={styles['header-controls']}>
+					<div className={styles['entries-count']}>
 						<SelectControl
-							label={__(
-								'Entries to display',
-								'wp-ftek-course-pages'
-							)}
+							label={__('Entries to display', 'ftek-courses')}
 							value={perPage}
 							options={[
 								{ label: '10', value: 10 },
@@ -94,7 +91,7 @@ function CourseList(): JSX.Element {
 							}}
 						/>
 					</div>
-					<div className="clear-filters">
+					<div className={styles['clear-filters']}>
 						<Button
 							variant="tertiary"
 							onClick={() => {
@@ -104,17 +101,13 @@ function CourseList(): JSX.Element {
 								setPageIndex(0);
 							}}
 						>
-							{__('Clear filters', 'wp-ftek-course-pages')}
+							{__('Clear filters', 'ftek-courses')}
 						</Button>
 					</div>
 				</div>
-				<div className="header-search">
+				<div className={styles['header-search']}>
 					<TextControl
-						label={_x(
-							'Search',
-							'course page',
-							'wp-ftek-course-pages'
-						)}
+						label={_x('Search', 'course page', 'ftek-courses')}
 						value={search}
 						onChange={(value) => {
 							setSearch(value);
@@ -123,25 +116,17 @@ function CourseList(): JSX.Element {
 					/>
 				</div>
 			</div>
-			<div className="course-list-body">
+			<div className={styles['course-list-body']}>
 				{filteredPosts.length > 0 ? (
 					<table>
 						<thead>
 							<tr>
-								<th>
-									{__('Course page', 'wp-ftek-course-pages')}
-								</th>
-								<th>
-									{__('Course code', 'wp-ftek-course-pages')}
-								</th>
-								<th>{__('Credits', 'wp-ftek-course-pages')}</th>
+								<th>{__('Course page', 'ftek-courses')}</th>
+								<th>{__('Course code', 'ftek-courses')}</th>
+								<th>{__('Credits', 'ftek-courses')}</th>
 								<th>
 									<div>
-										{_x(
-											'Year',
-											'grade',
-											'wp-ftek-course-pages'
-										)}
+										{_x('Year', 'grade', 'ftek-courses')}
 										<DropdownMenu icon="filter">
 											{() => (
 												<>
@@ -186,10 +171,7 @@ function CourseList(): JSX.Element {
 								</th>
 								<th>
 									<div>
-										{__(
-											'Study period',
-											'wp-ftek-course-pages'
-										)}
+										{__('Study period', 'ftek-courses')}
 										<DropdownMenu icon="filter">
 											{() => (
 												<MenuGroupCheckboxes
@@ -211,7 +193,7 @@ function CourseList(): JSX.Element {
 										</DropdownMenu>
 									</div>
 								</th>
-								<th>{__('Links', 'wp-ftek-course-pages')}</th>
+								<th>{__('Links', 'ftek-courses')}</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -254,15 +236,12 @@ function CourseList(): JSX.Element {
 						</tbody>
 					</table>
 				) : (
-					<p>{__('No courses found', 'wp-ftek-course-pages')}</p>
+					<p>{__('No courses found', 'ftek-courses')}</p>
 				)}
 			</div>
-			<div className="course-list-footer">
+			<div className={styles['course-list-footer']}>
 				<small>
-					{__(
-						'Showing %$1s to %$2s of %$3s entries',
-						'wp-ftek-course-pages'
-					)
+					{__('Showing %$1s to %$2s of %$3s entries', 'ftek-courses')
 						.replace(
 							'%$1s',
 							Math.min(
@@ -285,7 +264,7 @@ function CourseList(): JSX.Element {
 						disabled={pageIndex <= 0}
 						onClick={() => setPageIndex(pageIndex - 1)}
 					>
-						{_x('Previous', 'course page', 'wp-ftek-course-pages')}
+						{_x('Previous', 'course page', 'ftek-courses')}
 					</Button>
 					<Button
 						variant="tertiary"
@@ -294,11 +273,11 @@ function CourseList(): JSX.Element {
 						}
 						onClick={() => setPageIndex(pageIndex + 1)}
 					>
-						{_x('Next', 'course page', 'wp-ftek-course-pages')}
+						{_x('Next', 'course page', 'ftek-courses')}
 					</Button>
 				</span>
 			</div>
-		</div>
+		</>
 	);
 }
 

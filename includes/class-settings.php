@@ -2,10 +2,10 @@
 /**
  * Handles plugin settings
  *
- * @package ftek/wp-ftek-course-pages
+ * @package ftek/ftek-courses
  */
 
-namespace Ftek\WPFtekCoursePages;
+namespace Ftek\Courses;
 
 /**
  * Handles plugin settings
@@ -54,7 +54,7 @@ class Settings {
 	public function add_hooks() {
 		add_action( 'rest_api_init', array( $this, 'rest_api_init' ) );
 		add_action( 'admin_menu', array( $this, 'add_settings_page' ) );
-		add_filter( 'plugin_action_links_wp-ftek-course-pages/wp-ftek-course-pages.php', array( $this, 'add_settings_action_link' ) );
+		add_filter( 'plugin_action_links_ftek-courses/ftek-courses.php', array( $this, 'add_settings_action_link' ) );
 	}
 
 	/**
@@ -74,7 +74,7 @@ class Settings {
 	 */
 	public function rest_api_init(): void {
 		register_rest_route(
-			'wp-ftek-course-pages/v1',
+			'ftek-courses/v1',
 			'/settings',
 			array(
 				'methods'             => 'GET',
@@ -88,7 +88,7 @@ class Settings {
 		);
 
 		register_rest_route(
-			'wp-ftek-course-pages/v1',
+			'ftek-courses/v1',
 			'/settings',
 			array(
 				'methods'             => 'POST',
@@ -170,13 +170,13 @@ class Settings {
 	public function add_settings_page(): void {
 		$settings_page = add_submenu_page(
 			'edit.php?post_type=course-page',
-			__( 'Course pages settings', 'wp-ftek-course-pages' ),
-			__( 'Settings', 'wp-ftek-course-pages' ),
+			__( 'Course pages settings', 'ftek-courses' ),
+			__( 'Settings', 'ftek-courses' ),
 			'edit_others_pages',
 			'wp_ftek_course_pages_settings',
 			function(): void {
 				?>
-				<div id="wp-ftek-course-pages-settings" class="wrap"></div>
+				<div id="ftek-courses-settings" class="wrap"></div>
 				<?php
 			}
 		);
@@ -195,7 +195,7 @@ class Settings {
 	 * Enqueues scripts and styles needed on the settings page
 	 */
 	public function enqueue_settings_page_scripts(): void {
-		enqueue_entrypoint_script( 'wp-ftek-course-pages-settings', 'settings.tsx' );
+		enqueue_entrypoint_script( 'ftek-courses-settings', 'settings.tsx' );
 	}
 
 	/**
@@ -215,7 +215,7 @@ class Settings {
 		ob_start();
 		?>
 		<a href="<?php echo esc_attr( $url ); ?>">
-			<?php esc_html_e( 'Settings', 'wp-ftek-course-pages' ); ?>
+			<?php esc_html_e( 'Settings', 'ftek-courses' ); ?>
 		</a>
 		<?php
 		$actions[] = ob_get_clean();

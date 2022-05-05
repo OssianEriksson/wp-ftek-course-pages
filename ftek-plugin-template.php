@@ -1,17 +1,18 @@
 <?php
 /**
- * Plugin Name:     WP Ftek Course Pages
- * Description:     WordPress plugin for displaying course information at the Physics division of Chalmers University of Technology.
+ * Plugin Name:     Ftek Course Pages
+ * Plugin URI:      https://github.com/fysikteknologsektionen/ftek-courses
+ * Description:     WordPress plugin for displaying course information at the Physics division of Chalmers University of Technology
  * Author:          Ossian Eriksson
  * Author URI:      https://github.com/OssianEriksson
- * Text Domain:     wp-ftek-course-pages
+ * Text Domain:     ftek-courses
  * Domain Path:     /languages
- * Version:         0.1.0
+ * Version:         0.2.0
  *
- * @package ftek\wp-ftek-course-pages
+ * @package ftek\ftek-courses
  */
 
-namespace Ftek\WPFtekCoursePages;
+namespace Ftek\Courses;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -33,7 +34,7 @@ function enqueue_entrypoint_script( string $handle, string $src ): void {
 		$src = implode( '.js', $src );
 	}
 
-	$base_path = '/build/entrypoints/' . $src;
+	$base_path = '/build/' . $src;
 
 	$asset = require PLUGIN_ROOT . $base_path . '.asset.php';
 	if ( file_exists( PLUGIN_ROOT . $base_path . '.css' ) ) {
@@ -53,7 +54,7 @@ function enqueue_entrypoint_script( string $handle, string $src ): void {
 	);
 	wp_set_script_translations(
 		$handle,
-		'wp-ftek-course-pages',
+		'ftek-courses',
 		PLUGIN_ROOT . '/languages'
 	);
 }
@@ -63,7 +64,7 @@ add_action(
 	'init',
 	function(): void {
 		$plugin_rel_path = plugin_basename( dirname( PLUGIN_FILE ) ) . '/languages';
-		load_plugin_textdomain( 'wp-ftek-course-pages', false, $plugin_rel_path );
+		load_plugin_textdomain( 'ftek-courses', false, $plugin_rel_path );
 	}
 );
 

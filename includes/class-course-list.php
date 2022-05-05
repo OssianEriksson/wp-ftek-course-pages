@@ -2,10 +2,10 @@
 /**
  * Course_List definition
  *
- * @package ftek\wp-ftek-course-pages
+ * @package ftek\ftek-courses
  */
 
-namespace Ftek\WPFtekCoursePages;
+namespace Ftek\Courses;
 
 /**
  * Class handling the course list block
@@ -26,17 +26,17 @@ class Course_List {
 	public function register_block(): void {
 		register_block_type( PLUGIN_ROOT . '/build/blocks/course-list' );
 		wp_set_script_translations(
-			'wp-ftek-course-pages-course-list-editor-script',
-			'wp-ftek-course-pages',
+			'ftek-courses-course-list-editor-script',
+			'ftek-courses',
 			PLUGIN_ROOT . '/languages'
 		);
 		wp_set_script_translations(
-			'wp-ftek-course-pages-course-list-view-script',
-			'wp-ftek-course-pages',
+			'ftek-courses-course-list-view-script',
+			'ftek-courses',
 			PLUGIN_ROOT . '/languages'
 		);
 		wp_add_inline_script(
-			'wp-ftek-course-pages-course-list-editor-script',
+			'ftek-courses-course-list-editor-script',
 			'const wpFtekCoursePagesCourseListEditor = ' . wp_json_encode(
 				array(
 					'iconUrl' => plugins_url( '/assets/open-book.svg', PLUGIN_FILE ),

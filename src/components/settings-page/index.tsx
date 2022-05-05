@@ -12,14 +12,14 @@ import { __, _x } from '@wordpress/i18n';
 import { useDispatch, useSelect } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
 
-import './index.scss';
+import styles from './index.module.scss';
 import { Option, programs, studyPerionds, Year } from '../../types';
 import { formatProgramYear } from '../../utils/meta-formatting';
 
 const ErrorDisplay = (error: any): JSX.Element => (
 	<>
-		{__('The following error has occurred:', 'wp-ftek-course-pages')}
-		<pre className="error">{JSON.stringify(error, null, 4)}</pre>
+		{__('The following error has occurred:', 'ftek-courses')}
+		<pre className={styles.error}>{JSON.stringify(error, null, 4)}</pre>
 	</>
 );
 
@@ -33,7 +33,7 @@ const NoticeBar = (): JSX.Element => {
 
 const SpinnerPlaceholder = (): JSX.Element => (
 	<Placeholder>
-		<div className="placeholder-center">
+		<div className={styles['placeholder-center']}>
 			<Spinner />
 		</div>
 	</Placeholder>
@@ -43,7 +43,7 @@ const SettingsContent = (): JSX.Element => {
 	const [error, setError] = useState<unknown>(null);
 	const [option, setOption] = useState<Option>(null);
 	useEffect(() => {
-		apiFetch({ path: '/wp-ftek-course-pages/v1/settings' })
+		apiFetch({ path: '/ftek-courses/v1/settings' })
 			.then((response) => {
 				setOption(response as Option);
 			})
@@ -62,16 +62,14 @@ const SettingsContent = (): JSX.Element => {
 
 	const save = () => {
 		apiFetch({
-			path: '/wp-ftek-course-pages/v1/settings',
+			path: '/ftek-courses/v1/settings',
 			method: 'POST',
 			data: option,
 		})
 			.then(() =>
-				createNotice(
-					'success',
-					__('Settings saved.', 'wp-ftek-course-pages'),
-					{ type: 'snackbar' }
-				)
+				createNotice('success', __('Settings saved.', 'ftek-courses'), {
+					type: 'snackbar',
+				})
 			)
 			.catch((reason) =>
 				createNotice(
@@ -84,23 +82,23 @@ const SettingsContent = (): JSX.Element => {
 
 	return (
 		<>
-			<h2>{__('Dates', 'wp-ftek-course-pages')}</h2>
+			<h2>{__('Dates', 'ftek-courses')}</h2>
 			<p>
 				{__(
 					'Enter the final date of each study period.',
-					'wp-ftek-course-pages'
+					'ftek-courses'
 				)}
 			</p>
 			{studyPerionds.map((sp) => (
-				<div key={sp} className="last-day">
+				<div key={sp} className={styles['last-day']}>
 					<span>
 						{__(
 							'Last day of study period %$1s',
-							'wp-ftek-course-pages'
+							'ftek-courses'
 						).replace('%$1s', sp.toString())}
 					</span>
 					<SelectControl
-						label={__('Month', 'wp-ftek-course-pages')}
+						label={__('Month', 'ftek-courses')}
 						value={option.study_periods_end[sp - 1].month}
 						options={[...Array(12).keys()].map((i) => ({
 							label: `${i + 1}`,
@@ -119,7 +117,7 @@ const SettingsContent = (): JSX.Element => {
 						}}
 					/>
 					<SelectControl
-						label={__('Day', 'wp-ftek-course-pages')}
+						label={__('Day', 'ftek-courses')}
 						value={option.study_periods_end[sp - 1].day}
 						options={[...Array(31).keys()].map((i) => ({
 							label: `${i + 1}`,
@@ -139,11 +137,11 @@ const SettingsContent = (): JSX.Element => {
 					/>
 				</div>
 			))}
-			<h2>{__('Schedules', 'wp-ftek-course-pages')}</h2>
+			<h2>{__('Schedules', 'ftek-courses')}</h2>
 			<p>
 				{__(
 					'Enter the URL to the schedule for each class. The schedule should begin at the current week and end one year later.',
-					'wp-ftek-course-pages'
+					'ftek-courses'
 				)}
 			</p>
 			{(['1', '2', '3'] as Exclude<Year, 'master'>[]).map((year, i) => {
@@ -151,18 +149,17 @@ const SettingsContent = (): JSX.Element => {
 				return (
 					<Fragment key={i}>
 						<h3>
-							{_x(
-								'Year %$1s',
-								'grade',
-								'wp-ftek-course-pages'
-							).replace('%$1s', year)}
+							{_x('Year %$1s', 'grade', 'ftek-courses').replace(
+								'%$1s',
+								year
+							)}
 						</h3>
 						{programs.map((program, j) => (
 							<TextControl
 								key={j}
 								label={__(
 									'URL to schedule for %$1s',
-									'wp-ftek-course-pages'
+									'ftek-courses'
 								).replace(
 									'%$1s',
 									formatProgramYear(year, [program])
@@ -181,27 +178,27 @@ const SettingsContent = (): JSX.Element => {
 					</Fragment>
 				);
 			})}
-			<h2>{__('Miscellaneous settings', 'wp-ftek-course-pages')}</h2>
+			<h2>{__('Miscellaneous settings', 'ftek-courses')}</h2>
 			<TextControl
-				label={__('Course page slug', 'wp-ftek-course-pages')}
+				label={__('Course page slug', 'ftek-courses')}
 				value={option.slug}
 				onChange={(value: string) =>
 					setOption({ ...option, slug: value })
 				}
 			/>
 			<Button onClick={save} isPrimary>
-				{__('Save changes', 'wp-ftek-course-pages')}
+				{__('Save changes', 'ftek-courses')}
 			</Button>
 		</>
 	);
 };
 
 const SettingsPage = (): JSX.Element => (
-	<div className="wp-ftek-course-pages-settings">
-		<h1>{__('Course Pages Settings', 'wp-ftek-course-pages')}</h1>
+	<>
+		<h1>{__('Course Pages Settings', 'ftek-courses')}</h1>
 		<SettingsContent />
 		<NoticeBar />
-	</div>
+	</>
 );
 
 export default SettingsPage;

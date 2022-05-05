@@ -13,7 +13,7 @@ import {
 } from '../../types';
 import { formatProgramYear } from '../../utils/meta-formatting';
 
-import './index.scss';
+import styles from './index.module.scss';
 
 type PostView = {
 	title: string;
@@ -43,7 +43,7 @@ function YearTable({
 	) as { [P in Program | 'multiple']: number };
 
 	if (Math.max(...Object.values(maxCourses)) <= 0) {
-		return <p>{__('No courses found', 'wp-ftek-course-pages')}</p>;
+		return <p>{__('No courses found', 'ftek-courses')}</p>;
 	}
 
 	return (
@@ -53,10 +53,10 @@ function YearTable({
 					<th />
 					{studyPerionds.map((sp, i) => (
 						<th key={i}>
-							{__(
-								'Study period %$1s',
-								'wp-ftek-course-pages'
-							).replace('%$1s', sp.toString())}
+							{__('Study period %$1s', 'ftek-courses').replace(
+								'%$1s',
+								sp.toString()
+							)}
 						</th>
 					))}
 				</tr>
@@ -73,7 +73,7 @@ function YearTable({
 										? _x(
 												'Y%$1s',
 												'grade',
-												'wp-ftek-course-pages'
+												'ftek-courses'
 										  ).replace('%$1s', year)
 										: formatProgramYear(year, [program])}
 								</th>
@@ -139,7 +139,7 @@ export default function CourseTable(): JSX.Element {
 	};
 
 	let footnotesIndex = 1;
-	const electiveCourseComment = __('Elective course', 'wp-ftek-course-pages');
+	const electiveCourseComment = __('Elective course', 'ftek-courses');
 	const footnotes: { [k: string]: number } = {};
 
 	allPosts.forEach((post) => {
@@ -179,7 +179,7 @@ export default function CourseTable(): JSX.Element {
 	const footnotesEntries = Object.entries(footnotes);
 
 	return (
-		<div className="table-wrapper">
+		<div className={styles['table-wrapper']}>
 			{(
 				years.filter((year) => year !== 'master') as Exclude<
 					Year,
@@ -188,11 +188,10 @@ export default function CourseTable(): JSX.Element {
 			).map((year, i) => (
 				<Fragment key={i}>
 					<h3>
-						{_x(
-							'Year %$1s',
-							'grade',
-							'wp-ftek-course-pages'
-						).replace('%$1s', year)}
+						{_x('Year %$1s', 'grade', 'ftek-courses').replace(
+							'%$1s',
+							year
+						)}
 					</h3>
 					<YearTable
 						year={year}

@@ -18,34 +18,32 @@ function CurrentCourses(): JSX.Element {
 	const [currentSp, setCurrentSp] = useState<StudyPeriond>(studyPerionds[0]);
 
 	useEffect(() => {
-		apiFetch({ path: '/wp-ftek-course-pages/v1/settings' }).then(
-			(response) => {
-				const opt = response as Option;
+		apiFetch({ path: '/ftek-courses/v1/settings' }).then((response) => {
+			const opt = response as Option;
 
-				setOption(() => opt);
+			setOption(() => opt);
 
-				const currentDate = new Date();
+			const currentDate = new Date();
 
-				const sps = opt.study_periods_end
-					.map((sp, i) => ({
-						end: new Date(
-							currentDate.getFullYear(),
-							sp.month - 1,
-							sp.day
-						),
-						sp: studyPerionds[i],
-					}))
-					.sort((a, b) => a.end.valueOf() - b.end.valueOf());
+			const sps = opt.study_periods_end
+				.map((sp, i) => ({
+					end: new Date(
+						currentDate.getFullYear(),
+						sp.month - 1,
+						sp.day
+					),
+					sp: studyPerionds[i],
+				}))
+				.sort((a, b) => a.end.valueOf() - b.end.valueOf());
 
-				for (let i = sps.length - 1; i >= 0; i--) {
-					if (currentDate > sps[i].end) {
-						setCurrentSp(() => sps[(i + 1) % sps.length].sp);
-						return;
-					}
+			for (let i = sps.length - 1; i >= 0; i--) {
+				if (currentDate > sps[i].end) {
+					setCurrentSp(() => sps[(i + 1) % sps.length].sp);
+					return;
 				}
-				setCurrentSp(() => sps[0].sp);
 			}
-		);
+			setCurrentSp(() => sps[0].sp);
+		});
 	}, []);
 
 	const posts = useFetchAll<CoursePage>({
@@ -76,7 +74,7 @@ function CurrentCourses(): JSX.Element {
 									' ' +
 									__(
 										'(Schedule %$1s)',
-										'wp-ftek-course-pages'
+										'ftek-courses'
 									).replace(
 										'%$1s',
 										programs
@@ -103,9 +101,7 @@ function CurrentCourses(): JSX.Element {
 								))}
 							</ul>
 						) : (
-							<p>
-								{__('No courses found', 'wp-ftek-course-pages')}
-							</p>
+							<p>{__('No courses found', 'ftek-courses')}</p>
 						)}
 					</Fragment>
 				);

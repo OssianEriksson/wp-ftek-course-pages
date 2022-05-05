@@ -1,9 +1,9 @@
 {
 	"apiVersion": 2,
-	"name": "wp-ftek-course-pages/course-list",
+	"name": "ftek-courses/course-list",
 	"title": "Course list",
 	"category": "widgets",
-	"textdomain": "wp-ftek-course-pages",
+	"textdomain": "ftek-courses",
 	"style": "file:view.css",
 	"viewScript": "file:view.js",
 	"editorScript": "file:editor.js"

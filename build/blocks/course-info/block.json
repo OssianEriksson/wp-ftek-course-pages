@@ -1,9 +1,9 @@
 {
 	"apiVersion": 2,
-	"name": "wp-ftek-course-pages/course-info",
+	"name": "ftek-courses/course-info",
 	"title": "Course info",
 	"category": "widgets",
-	"textdomain": "wp-ftek-course-pages",
+	"textdomain": "ftek-courses",
 	"attributes": {
 		"code": {
 			"type": "string",

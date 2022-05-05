@@ -2,10 +2,10 @@
 /**
  * Course_Page_Posts definition
  *
- * @package ftek\wp-ftek-course-pages
+ * @package ftek\ftek-courses
  */
 
-namespace Ftek\WPFtekCoursePages;
+namespace Ftek\Courses;
 
 /**
  * Class handling the custom course page post type
@@ -159,12 +159,12 @@ class Course_Page_Posts {
 	public function register_post_type(): void {
 		register_block_type( PLUGIN_ROOT . '/build/blocks/course-info' );
 		wp_set_script_translations(
-			'wp-ftek-course-pages-course-info-editor-script',
-			'wp-ftek-course-pages',
+			'ftek-courses-course-info-editor-script',
+			'ftek-courses',
 			PLUGIN_ROOT . '/languages'
 		);
 		wp_add_inline_script(
-			'wp-ftek-course-pages-course-info-editor-script',
+			'ftek-courses-course-info-editor-script',
 			'const wpFtekCoursePagesCourseInfoEditor = ' . wp_json_encode(
 				array(
 					'iconUrl' => plugins_url( '/assets/open-book.svg', PLUGIN_FILE ),
@@ -177,32 +177,32 @@ class Course_Page_Posts {
 			'course-page',
 			array(
 				'labels'              => array(
-					'name'                   => __( 'Course pages', 'wp-ftek-course-pages' ),
-					'singular_name'          => __( 'Course page', 'wp-ftek-course-pages' ),
-					'add_new'                => _x( 'Add new', 'course page', 'wp-ftek-course-pages' ),
-					'add_new_item'           => __( 'Add New Course page', 'wp-ftek-course-pages' ),
-					'edit_item'              => __( 'Edit Course page', 'wp-ftek-course-pages' ),
-					'new_item'               => __( 'New Course page', 'wp-ftek-course-pages' ),
-					'view_item'              => __( 'View Course page', 'wp-ftek-course-pages' ),
-					'view_items'             => __( 'View Course pages', 'wp-ftek-course-pages' ),
-					'search_items'           => __( 'Search Course pages', 'wp-ftek-course-pages' ),
-					'not_found'              => __( 'No Course pages found', 'wp-ftek-course-pages' ),
-					'not_found_in_trash'     => __( 'No Course pages found in Trash', 'wp-ftek-course-pages' ),
-					'all_items'              => __( 'All Course pages', 'wp-ftek-course-pages' ),
-					'attributes'             => __( 'Course page Attributes', 'wp-ftek-course-pages' ),
-					'insert_into_item'       => __( 'Insert into Course page', 'wp-ftek-course-pages' ),
-					'uploaded_to_this_item'  => __( 'Uploaded to this Course page', 'wp-ftek-course-pages' ),
-					'filter_items_list'      => __( 'Filter Course page list', 'wp-ftek-course-pages' ),
-					'items_list_navigation'  => __( 'Course page list navigation', 'wp-ftek-course-pages' ),
-					'items_list'             => __( 'Course page list', 'wp-ftek-course-pages' ),
-					'item_published'         => __( 'Course page published', 'wp-ftek-course-pages' ),
-					'item_reverted_to_draft' => __( 'Course page reverted to draft', 'wp-ftek-course-pages' ),
-					'item_scheduled'         => __( 'Course page scheduled', 'wp-ftek-course-pages' ),
-					'item_updated'           => __( 'Course page updated', 'wp-ftek-course-pages' ),
-					'item_link'              => __( 'Course page link', 'wp-ftek-course-pages' ),
-					'item_link_description'  => __( 'A link to a Course page', 'wp-ftek-course-pages' ),
+					'name'                   => __( 'Course pages', 'ftek-courses' ),
+					'singular_name'          => __( 'Course page', 'ftek-courses' ),
+					'add_new'                => _x( 'Add new', 'course page', 'ftek-courses' ),
+					'add_new_item'           => __( 'Add New Course page', 'ftek-courses' ),
+					'edit_item'              => __( 'Edit Course page', 'ftek-courses' ),
+					'new_item'               => __( 'New Course page', 'ftek-courses' ),
+					'view_item'              => __( 'View Course page', 'ftek-courses' ),
+					'view_items'             => __( 'View Course pages', 'ftek-courses' ),
+					'search_items'           => __( 'Search Course pages', 'ftek-courses' ),
+					'not_found'              => __( 'No Course pages found', 'ftek-courses' ),
+					'not_found_in_trash'     => __( 'No Course pages found in Trash', 'ftek-courses' ),
+					'all_items'              => __( 'All Course pages', 'ftek-courses' ),
+					'attributes'             => __( 'Course page Attributes', 'ftek-courses' ),
+					'insert_into_item'       => __( 'Insert into Course page', 'ftek-courses' ),
+					'uploaded_to_this_item'  => __( 'Uploaded to this Course page', 'ftek-courses' ),
+					'filter_items_list'      => __( 'Filter Course page list', 'ftek-courses' ),
+					'items_list_navigation'  => __( 'Course page list navigation', 'ftek-courses' ),
+					'items_list'             => __( 'Course page list', 'ftek-courses' ),
+					'item_published'         => __( 'Course page published', 'ftek-courses' ),
+					'item_reverted_to_draft' => __( 'Course page reverted to draft', 'ftek-courses' ),
+					'item_scheduled'         => __( 'Course page scheduled', 'ftek-courses' ),
+					'item_updated'           => __( 'Course page updated', 'ftek-courses' ),
+					'item_link'              => __( 'Course page link', 'ftek-courses' ),
+					'item_link_description'  => __( 'A link to a Course page', 'ftek-courses' ),
 				),
-				'description'         => __( 'Information about a course', 'wp-ftek-course-pages' ),
+				'description'         => __( 'Information about a course', 'ftek-courses' ),
 				'public'              => false,
 				'exclude_from_search' => false,
 				'publicly_queryable'  => true,
@@ -220,7 +220,7 @@ class Course_Page_Posts {
 					'with_front' => false,
 				),
 				'template'            => array(
-					array( 'wp-ftek-course-pages/course-info' ),
+					array( 'ftek-courses/course-info' ),
 				),
 			)
 		);

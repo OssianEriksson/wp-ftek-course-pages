@@ -2,10 +2,10 @@ import { __, _x } from '@wordpress/i18n';
 import { Program, StudyPeriond, studyPerionds, Year } from '../types';
 
 export const formatCode = (code: string): string =>
-	code || __('Course Code', 'wp-ftek-course-pages');
+	code || __('Course Code', 'ftek-courses');
 
 export const formatCredits = (credits: number): string =>
-	_x('%$1s hec', 'higher education credits', 'wp-ftek-course-pages').replace(
+	_x('%$1s hec', 'higher education credits', 'ftek-courses').replace(
 		'%$1s',
 		(credits || 0).toString()
 	);
@@ -15,7 +15,7 @@ export const formatProgramYear = (
 	programs: Program[]
 ): string => {
 	if (year === 'master') {
-		return __("Master's course", 'wp-ftek-course-pages');
+		return __("Master's course", 'ftek-courses');
 	}
 	if (programs.length > 0) {
 		return programs
@@ -23,17 +23,14 @@ export const formatProgramYear = (
 			.map((program) => program + year || '')
 			.join(' ');
 	}
-	return _x('Year', 'grade', 'wp-ftek-course-pages');
+	return _x('Year', 'grade', 'ftek-courses');
 };
 
 export const formatYear = (year: Year): string => {
 	if (year === 'master') {
-		return __("Master's course", 'wp-ftek-course-pages');
+		return __("Master's course", 'ftek-courses');
 	}
-	return _x('Year %$1s', 'grade', 'wp-ftek-course-pages').replace(
-		'%$1s',
-		year
-	);
+	return _x('Year %$1s', 'grade', 'ftek-courses').replace('%$1s', year);
 };
 
 export const formatSP = (sps: StudyPeriond[]): string =>
@@ -51,11 +48,7 @@ export const formatSP = (sps: StudyPeriond[]): string =>
 					return previous;
 				})
 				.map((range) =>
-					_x(
-						'SP%$1s',
-						'study period',
-						'wp-ftek-course-pages'
-					).replace(
+					_x('SP%$1s', 'study period', 'ftek-courses').replace(
 						'%$1s',
 						range.length > 1
 							? range[0] + '-' + range[range.length - 1]
@@ -63,4 +56,4 @@ export const formatSP = (sps: StudyPeriond[]): string =>
 					)
 				)
 				.join(' ')
-		: _x('SP', 'study period', 'wp-ftek-course-pages');
+		: _x('SP', 'study period', 'ftek-courses');

@@ -1,21 +1,11 @@
 $desktop-breakpoint: 783px;
 
-.wp-block-wp-ftek-course-pages-course-info .course-layout {
+.course-layout {
 	display: flex;
 	flex-direction: column;
 
 	@media (min-width: $desktop-breakpoint) {
 		flex-direction: row;
-	}
-
-	.course-content {
-		flex-grow: 1;
-		flex-basis: 50%;
-
-		@media (min-width: $desktop-breakpoint) {
-			flex-direction: row;
-			padding-right: 1rem;
-		}
 	}
 
 	.course-sidebar {
@@ -46,24 +36,30 @@ $desktop-breakpoint: 783px;
 	}
 }
 
-.wp-block-wp-ftek-course-pages-course-info-inspector {
+.course-content {
+	flex-grow: 1;
+	flex-basis: 50%;
+
+	@media (min-width: $desktop-breakpoint) {
+		flex-direction: row;
+		padding-right: 1rem;
+	}
+}
+
+.list-selector {
 	width: 100%;
+}
 
-	&.list-selector {
-		width: 100%;
+.list-selector-item {
+	display: flex;
+	align-items: center;
+	margin-bottom: 1rem;
+}
 
-		.list-selector-item {
-			display: flex;
-			align-items: center;
-			margin-bottom: 1rem;
+.stacked-inputs {
+	padding: 0.5rem;
+}
 
-			.stacked-inputs {
-				padding: 0.5rem;
-			}
-		}
-	}
-
-	.panel-label {
-		margin-bottom: 1rem;
-	}
+.panel-label {
+	margin-bottom: 1rem;
 }

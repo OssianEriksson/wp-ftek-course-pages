@@ -2,10 +2,10 @@
 /**
  * Course_Table definition
  *
- * @package ftek\wp-ftek-course-pages
+ * @package ftek\ftek-courses
  */
 
-namespace Ftek\WPFtekCoursePages;
+namespace Ftek\Courses;
 
 /**
  * Class handling the course table block
@@ -25,17 +25,17 @@ class Course_Table {
 	public function register_block(): void {
 		register_block_type( PLUGIN_ROOT . '/build/blocks/course-table' );
 		wp_set_script_translations(
-			'wp-ftek-course-pages-course-table-editor-script',
-			'wp-ftek-course-pages',
+			'ftek-courses-course-table-editor-script',
+			'ftek-courses',
 			PLUGIN_ROOT . '/languages'
 		);
 		wp_set_script_translations(
-			'wp-ftek-course-pages-course-table-view-script',
-			'wp-ftek-course-pages',
+			'ftek-courses-course-table-view-script',
+			'ftek-courses',
 			PLUGIN_ROOT . '/languages'
 		);
 		wp_add_inline_script(
-			'wp-ftek-course-pages-course-table-editor-script',
+			'ftek-courses-course-table-editor-script',
 			'const wpFtekCoursePagesCourseTableEditor = ' . wp_json_encode(
 				array(
 					'iconUrl' => plugins_url( '/assets/open-book.svg', PLUGIN_FILE ),

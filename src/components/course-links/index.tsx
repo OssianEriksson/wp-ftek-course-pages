@@ -14,21 +14,21 @@ function CourseLinks({
 }): JSX.Element {
 	const linkItems: { text: string; url: string }[] = [
 		{
-			text: __('Course homepage', 'wp-ftek-course-pages'),
+			text: __('Course homepage', 'ftek-courses'),
 			url: meta.homepage_url,
 		},
 		{
-			text: __('General info', 'wp-ftek-course-pages'),
+			text: __('General info', 'ftek-courses'),
 			url: meta.info_url,
 		},
 		{
-			text: __('Latest survey', 'wp-ftek-course-pages'),
+			text: __('Latest survey', 'ftek-courses'),
 			url: meta.survey_url,
 		},
 		...(meta.code
 			? [
 					{
-						text: __('Exam statistics', 'wp-ftek-course-pages'),
+						text: __('Exam statistics', 'ftek-courses'),
 						url: `https://stats.ftek.se/${meta.code}`,
 					},
 			  ]

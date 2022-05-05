@@ -38,7 +38,7 @@ import {
 
 import metadata from './block.json';
 
-import './style.scss';
+import styles from './style.module.scss';
 
 type BlockAttributes = PostMetaShort;
 
@@ -57,26 +57,22 @@ function RenderedCoursePage({
 
 	return (
 		<>
-			<h2 className="course-banner">{`${formatCode(
-				meta.code
-			)} | ${formatCredits(meta.credits)} | ${formatProgramYear(
-				meta.year,
-				meta.programs
-			)} | ${formatSP(meta.study_perionds)}`}</h2>
-			<div className="course-layout">
-				<div className="course-content">{children}</div>
-				<div className="course-sidebar">
+			<h2>{`${formatCode(meta.code)} | ${formatCredits(
+				meta.credits
+			)} | ${formatProgramYear(meta.year, meta.programs)} | ${formatSP(
+				meta.study_perionds
+			)}`}</h2>
+			<div className={styles['course-layout']}>
+				<div className={styles['course-content']}>{children}</div>
+				<div className={styles['course-sidebar']}>
 					<CourseLinks
-						header={<h3>{__('Links', 'wp-ftek-course-pages')}</h3>}
+						header={<h3>{__('Links', 'ftek-courses')}</h3>}
 						meta={meta}
 					/>
 					{studentRepresentativeItems.length > 0 && (
 						<>
 							<h3>
-								{__(
-									'Student Representatives',
-									'wp-ftek-course-pages'
-								)}
+								{__('Student Representatives', 'ftek-courses')}
 							</h3>
 							<ul>
 								{studentRepresentativeItems.map(
@@ -102,14 +98,12 @@ function RenderedCoursePage({
 							</ul>
 						</>
 					)}
-					<h3>
-						{__('Is Anything Missing?', 'wp-ftek-course-pages')}
-					</h3>
+					<h3>{__('Is Anything Missing?', 'ftek-courses')}</h3>
 					<span
 						dangerouslySetInnerHTML={{
 							__html: __(
 								'Contact <a %$1s>SNF</a>.',
-								'wp-ftek-course-pages'
+								'ftek-courses'
 							).replace('%$1s', 'href="mailto:snf@ftek.se"'),
 						}}
 					/>
@@ -141,15 +135,12 @@ function EditableCoursePage({
 	const innerBlocksTemplate: Block[] = [
 		[
 			'core/heading',
-			{ content: __('Description', 'wp-ftek-course-pages'), level: 3 },
+			{ content: __('Description', 'ftek-courses'), level: 3 },
 		],
 		[
 			'core/paragraph',
 			{
-				placeholder: __(
-					'Description goes here.',
-					'wp-ftek-course-pages'
-				),
+				placeholder: __('Description goes here.', 'ftek-courses'),
 			},
 		],
 		...(driveList
@@ -160,7 +151,7 @@ function EditableCoursePage({
 							content: _x(
 								'Documents',
 								'drive list heading',
-								'wp-ftek-course-pages'
+								'ftek-courses'
 							),
 							level: 3,
 						},
@@ -200,13 +191,13 @@ function EditableCoursePage({
 		<>
 			<InspectorControls>
 				<PanelBody
-					title={__('Course Page', 'wp-ftek-course-pages')}
+					title={__('Course Page', 'ftek-courses')}
 					initialOpen={true}
 					icon={panelIcon}
 				>
 					<PanelRow>
 						<TextControl
-							label={__('Course code', 'wp-ftek-course-pages')}
+							label={__('Course code', 'ftek-courses')}
 							value={meta.code}
 							onChange={(value) =>
 								setMeta({ ...meta, code: value })
@@ -215,7 +206,7 @@ function EditableCoursePage({
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__('Credits', 'wp-ftek-course-pages')}
+							label={__('Credits', 'ftek-courses')}
 							value={
 								creditsText !== null
 									? creditsText
@@ -233,10 +224,7 @@ function EditableCoursePage({
 					<hr />
 					<PanelRow>
 						<TextControl
-							label={__(
-								'Course homepage URL',
-								'wp-ftek-course-pages'
-							)}
+							label={__('Course homepage URL', 'ftek-courses')}
 							value={meta.homepage_url}
 							onChange={(value) =>
 								setMeta({ ...meta, homepage_url: value })
@@ -245,10 +233,7 @@ function EditableCoursePage({
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__(
-								'Course info URL',
-								'wp-ftek-course-pages'
-							)}
+							label={__('Course info URL', 'ftek-courses')}
 							value={meta.info_url}
 							onChange={(value) =>
 								setMeta({ ...meta, info_url: value })
@@ -259,7 +244,7 @@ function EditableCoursePage({
 						<TextControl
 							label={__(
 								'Latest course survey URL',
-								'wp-ftek-course-pages'
+								'ftek-courses'
 							)}
 							value={meta.survey_url}
 							onChange={(value) =>
@@ -269,16 +254,16 @@ function EditableCoursePage({
 					</PanelRow>
 					<hr />
 					<PanelRow>
-						<div className="wp-block-wp-ftek-course-pages-course-info-inspector list-selector">
-							<div className="panel-label">
-								{__(
-									'Student representatives',
-									'wp-ftek-course-pages'
-								)}
+						<div className={styles['list-selector']}>
+							<div className={styles['panel-label']}>
+								{__('Student representatives', 'ftek-courses')}
 							</div>
 							{meta.student_representatives.map(
 								(representative, i) => (
-									<div key={i} className="list-selector-item">
+									<div
+										key={i}
+										className={styles['list-selector-item']}
+									>
 										<Button
 											icon={trash}
 											onClick={() => {
@@ -293,11 +278,13 @@ function EditableCoursePage({
 												});
 											}}
 										/>
-										<div className="stacked-inputs">
+										<div
+											className={styles['stacked-inputs']}
+										>
 											<TextControl
 												label={__(
 													'Full Name',
-													'wp-ftek-course-pages'
+													'ftek-courses'
 												)}
 												value={representative.name}
 												onChange={(value) => {
@@ -319,7 +306,7 @@ function EditableCoursePage({
 												label={_x(
 													'CID',
 													'Chalmers ID',
-													'wp-ftek-course-pages'
+													'ftek-courses'
 												)}
 												value={representative.cid}
 												onChange={(value) => {
@@ -356,16 +343,16 @@ function EditableCoursePage({
 								{_x(
 									'Add',
 									'student representative',
-									'wp-ftek-course-pages'
+									'ftek-courses'
 								)}
 							</Button>
 						</div>
 					</PanelRow>
 					<hr />
 					<PanelRow>
-						<div className="wp-block-wp-ftek-course-pages-course-info-inspector">
-							<div className="panel-label">
-								{__('Study period', 'wp-ftek-course-pages')}
+						<div>
+							<div className={styles['panel-label']}>
+								{__('Study period', 'ftek-courses')}
 							</div>
 							{studyPerionds.map((sp, i) => (
 								<CheckboxControl
@@ -373,7 +360,7 @@ function EditableCoursePage({
 									label={_x(
 										'SP%$1s',
 										'study period',
-										'wp-ftek-course-pages'
+										'ftek-courses'
 									).replace('%$1s', sp.toString())}
 									checked={meta.study_perionds.includes(sp)}
 									onChange={() => {
@@ -396,7 +383,7 @@ function EditableCoursePage({
 					<hr />
 					<PanelRow>
 						<RadioControl
-							label={_x('Year', 'grade', 'wp-ftek-course-pages')}
+							label={_x('Year', 'grade', 'ftek-courses')}
 							selected={meta.year}
 							options={years.map((year) => ({
 								label: formatYear(year),
@@ -409,9 +396,9 @@ function EditableCoursePage({
 					</PanelRow>
 					<hr />
 					<PanelRow>
-						<div className="wp-block-wp-ftek-course-pages-course-info-inspector">
-							<div className="panel-label">
-								{__('Progammes', 'wp-ftek-course-pages')}
+						<div>
+							<div className={styles['panel-label']}>
+								{__('Progammes', 'ftek-courses')}
 							</div>
 							{programs.map((program, i) => (
 								<CheckboxControl
@@ -440,11 +427,11 @@ function EditableCoursePage({
 						<TextControl
 							label={__(
 								'Approximate number of participants',
-								'wp-ftek-course-pages'
+								'ftek-courses'
 							)}
 							help={__(
 								'Used for sorting courses',
-								'wp-ftek-course-pages'
+								'ftek-courses'
 							)}
 							value={
 								participantCountText !== null
@@ -465,10 +452,7 @@ function EditableCoursePage({
 					</PanelRow>
 					<PanelRow>
 						<CheckboxControl
-							label={__(
-								'Elective course',
-								'wp-ftek-course-pages'
-							)}
+							label={__('Elective course', 'ftek-courses')}
 							checked={meta.elective}
 							onChange={(checked) => {
 								setMeta({
@@ -480,10 +464,10 @@ function EditableCoursePage({
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__('Comment', 'wp-ftek-course-pages')}
+							label={__('Comment', 'ftek-courses')}
 							help={__(
 								'Shown as footnote in course table',
-								'wp-ftek-course-pages'
+								'ftek-courses'
 							)}
 							value={meta.comment}
 							onChange={(value) => {
